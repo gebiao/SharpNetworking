@@ -54,6 +54,7 @@
 		67E8728D1C3CEEB2006E1D0D /* SharpNetworking */ = {
 			isa = PBXGroup;
 			children = (
+				67E872A01C3CEF08006E1D0D /* Source */,
 				67E8728E1C3CEEB2006E1D0D /* AppDelegate.swift */,
 				67E872901C3CEEB2006E1D0D /* ViewController.swift */,
 				67E872921C3CEEB2006E1D0D /* Main.storyboard */,
@@ -62,6 +63,13 @@
 				67E8729A1C3CEEB2006E1D0D /* Info.plist */,
 			);
 			path = SharpNetworking;
+			sourceTree = "<group>";
+		};
+		67E872A01C3CEF08006E1D0D /* Source */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
