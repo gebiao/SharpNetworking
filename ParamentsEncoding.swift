@@ -14,7 +14,7 @@ public enum Method: String {
 
 public enum ParameteEncoding {
     case URL
-    case URLEncoding
+    case URLEncodedInURL
     case JSON
     case PropertyList(plist: AnyObject, format: NSPropertyListFormat)
     case Custom
@@ -25,9 +25,34 @@ public enum ParameteEncoding {
         var encodError: NSError? = nil
         
         switch self {
-        case .URL, .URLEncoding:
+        case .URL, .URLEncodedInURL:
             
-            if let method = Method(rawValue: URLrequst.HTTPMethod) {
+            func query(parametes: [String : AnyObject]) {
+                for (key, value) in parametes {
+                    
+                }
+                
+            }
+            
+            func parametesEncodingInURL(method: Method) -> Bool {
+                switch self {
+                case .URLEncodedInURL:
+                    return true
+                default:
+                    break
+                }
+                
+                switch method {
+                case .GET, .DELETE, .HEAD:
+                    return true
+                default:
+                    return false
+                }
+            }
+            
+            if let method = Method(rawValue: URLrequst.HTTPMethod) where parametesEncodingInURL(method) {
+                
+            } else {
                 
             }
         case .JSON:
