@@ -52,6 +52,8 @@ public class Manager {
     
     public let delegate: SessionDelegate
     
+    let queue: dispatch_queue_t = dispatch_queue_create(nil, DISPATCH_QUEUE_SERIAL)
+    
     /// wheather start requst immediate
     public var startRequestImmediate: Bool = true
     
@@ -61,6 +63,32 @@ public class Manager {
             self.delegate = delegate
             self.session = NSURLSession(configuration: sessionConfiguration, delegate: delegate, delegateQueue: nil)
     }
+    
+    deinit {
+        self.session.invalidateAndCancel()
+    }
+    
+    public func request(method: Method, URLString: String, parameters: [String : AnyObject]? = nil, encoding: ParameteEncoding = .URL, heard: [String : String]? = nil) -> Requset {
+        return URLRequest(method, URLString: URLString, parameters: parameters, heard: heard)
+    }
+    
+    func URLRequest(
+        method: Method,
+        URLString: String,
+        parameters: [String : AnyObject]?,
+        encoding: ParameteEncoding = .URL,
+        heard: [String : String]?) -> Requset {
+            let mutableRequest = NSMutableURLRequest(URL: NSURL.init(string: URLString)!)
+            return request(encoding.encoding(mutableRequest, parametes: parameters).0)
+    }
+    
+    func request(URLRequest: NSMutableURLRequest) -> Requset {
+        var task: NSURLSessionTask!
+        dispatch_sync(queue) { task = self.session.dataTaskWithRequest(URLRequest) }
+        return Requset(session: session, task: task)
+    }
+    
+    
 }
 
 
