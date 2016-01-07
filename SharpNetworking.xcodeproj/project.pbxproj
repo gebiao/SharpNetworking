@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		673637041C3DF7EE007B3BC6 /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673637031C3DF7EE007B3BC6 /* Manager.swift */; };
+		673637061C3DF812007B3BC6 /* ParamentsEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673637051C3DF812007B3BC6 /* ParamentsEncoding.swift */; };
+		673637081C3DF81B007B3BC6 /* Requst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673637071C3DF81B007B3BC6 /* Requst.swift */; };
+		6736370A1C3DF825007B3BC6 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673637091C3DF825007B3BC6 /* Response.swift */; };
+		6736370C1C3DF836007B3BC6 /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6736370B1C3DF836007B3BC6 /* Download.swift */; };
+		6736370E1C3DF840007B3BC6 /* Upload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6736370D1C3DF840007B3BC6 /* Upload.swift */; };
+		673637101C3DF87A007B3BC6 /* ResponseSerialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6736370F1C3DF87A007B3BC6 /* ResponseSerialization.swift */; };
+		673637121C3DF890007B3BC6 /* SecurityPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673637111C3DF890007B3BC6 /* SecurityPolicy.swift */; };
 		67E8728F1C3CEEB2006E1D0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E8728E1C3CEEB2006E1D0D /* AppDelegate.swift */; };
 		67E872911C3CEEB2006E1D0D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E872901C3CEEB2006E1D0D /* ViewController.swift */; };
 		67E872941C3CEEB2006E1D0D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 67E872921C3CEEB2006E1D0D /* Main.storyboard */; };
@@ -15,6 +23,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		673637031C3DF7EE007B3BC6 /* Manager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Manager.swift; sourceTree = SOURCE_ROOT; };
+		673637051C3DF812007B3BC6 /* ParamentsEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParamentsEncoding.swift; sourceTree = SOURCE_ROOT; };
+		673637071C3DF81B007B3BC6 /* Requst.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Requst.swift; sourceTree = SOURCE_ROOT; };
+		673637091C3DF825007B3BC6 /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = SOURCE_ROOT; };
+		6736370B1C3DF836007B3BC6 /* Download.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Download.swift; sourceTree = SOURCE_ROOT; };
+		6736370D1C3DF840007B3BC6 /* Upload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Upload.swift; sourceTree = SOURCE_ROOT; };
+		6736370F1C3DF87A007B3BC6 /* ResponseSerialization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseSerialization.swift; sourceTree = SOURCE_ROOT; };
+		673637111C3DF890007B3BC6 /* SecurityPolicy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityPolicy.swift; sourceTree = SOURCE_ROOT; };
 		67E8728B1C3CEEB2006E1D0D /* SharpNetworking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SharpNetworking.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67E8728E1C3CEEB2006E1D0D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		67E872901C3CEEB2006E1D0D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -35,6 +51,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		673637011C3DF76D007B3BC6 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				673637031C3DF7EE007B3BC6 /* Manager.swift */,
+				673637051C3DF812007B3BC6 /* ParamentsEncoding.swift */,
+				673637071C3DF81B007B3BC6 /* Requst.swift */,
+				673637091C3DF825007B3BC6 /* Response.swift */,
+			);
+			name = Core;
+			sourceTree = "<group>";
+		};
+		673637021C3DF7C5007B3BC6 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				6736370B1C3DF836007B3BC6 /* Download.swift */,
+				6736370D1C3DF840007B3BC6 /* Upload.swift */,
+				6736370F1C3DF87A007B3BC6 /* ResponseSerialization.swift */,
+				673637111C3DF890007B3BC6 /* SecurityPolicy.swift */,
+			);
+			name = Features;
+			sourceTree = "<group>";
+		};
 		67E872821C3CEEB2006E1D0D = {
 			isa = PBXGroup;
 			children = (
@@ -68,6 +106,8 @@
 		67E872A01C3CEF08006E1D0D /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				673637011C3DF76D007B3BC6 /* Core */,
+				673637021C3DF7C5007B3BC6 /* Features */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -143,8 +183,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				673637061C3DF812007B3BC6 /* ParamentsEncoding.swift in Sources */,
 				67E872911C3CEEB2006E1D0D /* ViewController.swift in Sources */,
+				673637041C3DF7EE007B3BC6 /* Manager.swift in Sources */,
+				673637121C3DF890007B3BC6 /* SecurityPolicy.swift in Sources */,
 				67E8728F1C3CEEB2006E1D0D /* AppDelegate.swift in Sources */,
+				673637101C3DF87A007B3BC6 /* ResponseSerialization.swift in Sources */,
+				6736370E1C3DF840007B3BC6 /* Upload.swift in Sources */,
+				6736370A1C3DF825007B3BC6 /* Response.swift in Sources */,
+				6736370C1C3DF836007B3BC6 /* Download.swift in Sources */,
+				673637081C3DF81B007B3BC6 /* Requst.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,6 +340,7 @@
 				67E8729F1C3CEEB2006E1D0D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
