@@ -1,5 +1,5 @@
 //
-//  Download.swift
+//  File.swift
 //  SharpNetworking
 //
 //  Created by SharpSnake on 1/7/16.
@@ -8,6 +8,3 @@
 
 import Foundation
 
-extension Requset {
-    
-}
