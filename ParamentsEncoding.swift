@@ -19,20 +19,23 @@ public enum ParameteEncoding {
     case PropertyList(plist: AnyObject, format: NSPropertyListFormat)
     case Custom
     
-    func encoding(URLrequst: NSMutableURLRequest, parametes: [String : AnyObject]?) -> (NSMutableURLRequest, NSError?) {
+    func encoding(URLRequst: NSMutableURLRequest, parametes: [String : AnyObject]?) -> (NSMutableURLRequest, NSError?) {
         
-        guard let parametes = parametes else { return (URLrequst, nil)}
+        guard let parametes = parametes else { return (URLRequst, nil)}
         var encodError: NSError? = nil
         
         switch self {
         case .URL, .URLEncodedInURL:
             
-            func query(parametes: [String : AnyObject]) {
-                for (key, value) in parametes {
-                    
-                }
+            func query(parametes: [String : AnyObject]) -> String {
+                var allParametes: [(String, String)] = []
                 
+                for key in parametes.keys.sort(<) {
+                    allParametes += queryComponment(key, value: parametes[key]!)
+                }
+                return (allParametes.map { "\($0)=\($1)" } as [String]).joinWithSeparator("&")
             }
+            
             
             func parametesEncodingInURL(method: Method) -> Bool {
                 switch self {
@@ -50,17 +53,22 @@ public enum ParameteEncoding {
                 }
             }
             
-            if let method = Method(rawValue: URLrequst.HTTPMethod) where parametesEncodingInURL(method) {
-                
+            if let method = Method(rawValue: URLRequst.HTTPMethod) where parametesEncodingInURL(method) {
+                if let urlComponent = NSURLComponents(URL: URLRequst.URL!, resolvingAgainstBaseURL: false) {
+                    urlComponent.percentEncodedQuery = urlComponent.percentEncodedQuery.map { "\($0)" + "&"} ?? "" + query(parametes)
+                    URLRequst.URL = urlComponent.URL
+                }
             } else {
-                
+                URLRequst.setValue("charset=utf-8", forHTTPHeaderField: "Content-Type")
+                let data = query(parametes).dataUsingEncoding(NSUTF8StringEncoding)
+                URLRequst.HTTPBody = data
             }
         case .JSON:
             do {
                 let writeOption = NSJSONWritingOptions()
                 let data = try NSJSONSerialization.dataWithJSONObject(parametes, options: writeOption)
-                URLrequst.HTTPBody = data
-                URLrequst.setValue("Application/json", forHTTPHeaderField: "Content-Type")
+                URLRequst.HTTPBody = data
+                URLRequst.setValue("Application/json", forHTTPHeaderField: "Content-Type")
             } catch {
                 encodError = error as NSError
             }
@@ -68,17 +76,58 @@ public enum ParameteEncoding {
             do {
                 let writeOption = NSPropertyListWriteOptions()
                 let data = try NSPropertyListSerialization.dataWithPropertyList(obj, format: format, options: writeOption)
-                URLrequst.HTTPBody = data
-                URLrequst.setValue("Plist/x", forHTTPHeaderField: "Content-Type")
+                URLRequst.HTTPBody = data
+                URLRequst.setValue("Plist/x", forHTTPHeaderField: "Content-Type")
             } catch {
                 encodError = error as NSError
             }
         case .Custom:
             print("custom")
-        default:
-            print("no-op")
         }
         
-        return (URLrequst, encodError)
+        return (URLRequst, encodError)
+    }
+    
+    public func queryComponment(key: String, value: AnyObject) -> [(String, String)] {
+        var components: [(String, String)] = []
+        
+        if let dic = value as? [String : AnyObject] {
+            for (nestedKey, value) in dic {
+                components += queryComponment("\(nestedKey)[\(key)]", value: value)
+            }
+        } else if let array = value as? [AnyObject] {
+            for value in array {
+                components += queryComponment("\(key)[]", value: value)
+            }
+        } else {
+            components.append((escape(key), escape("\(value)")))
+        }
+        return components
+    }
+    
+    public func escape(string: String) -> String {
+        let generalDelimitersToEncode = ":#[]@" // does not include "?" or "/" due to RFC 3986 - Section 3.4
+        let subDelimitersToEncode = "!$&'()*+,;="
+        
+        let allowedCharacterSet = NSCharacterSet.URLQueryAllowedCharacterSet().mutableCopy() as! NSMutableCharacterSet
+        allowedCharacterSet.removeCharactersInString(generalDelimitersToEncode + subDelimitersToEncode)
+        
+        var escaped = ""
+        let batchSize = 50
+        var index = string.startIndex
+        
+        while index != string.endIndex {
+            let startIndex = index
+            let endIndex = index.advancedBy(batchSize, limit: string.endIndex)
+            let range = Range(start: startIndex, end: endIndex)
+            
+            let substring = string.substringWithRange(range)
+            
+            escaped += substring.stringByAddingPercentEncodingWithAllowedCharacters(allowedCharacterSet) ?? substring
+            
+            index = endIndex
+        }
+        
+        return escaped
     }
 }
