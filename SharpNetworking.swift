@@ -19,3 +19,14 @@ public func request(
         
         return Manager.sharedInstance.request(method, URLString: URLString, parameters: parameters, encoding: encoding, heard: heard)
 }
+
+public func download(
+    method: Method,
+    URLString: String,
+    parameters: [String : AnyObject]? = nil,
+    encoding: ParameteEncoding = .URL,
+    heard: [String : String]? = nil,
+    destination: Requset.DownloadFileDestination) -> Requset {
+        return Manager.sharedInstance.download(method, URLString: URLString, heard: heard, destination: destination)
+        
+}
