@@ -89,11 +89,24 @@ public class Manager {
     }
     
     
+    
+    
 }
 
 
 public class SessionDelegate : NSObject, NSURLSessionDelegate {
     
+    private var manageTaskList: [Int : NSURLSessionTask] = [ : ]
+    
+    subscript (sessionTask: NSURLSessionTask) -> Requset.DataOperator {
+        get {
+            
+        }
+        
+        set {
+            
+        }
+    }
     //MARK: - sessionDelegate
     public func URLSession(session: NSURLSession, didBecomeInvalidWithError error: NSError?) {
         

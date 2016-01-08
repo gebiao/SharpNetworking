@@ -29,52 +29,55 @@ public class Requset {
         self.dataOperator = DataOperator(task: task)
         self.session = session
     }
+    
+    
+    public class DataOperator {
+        /// session task
+        var task: NSURLSessionTask
+        
+        var response: NSHTTPURLResponse? { return task.response as? NSHTTPURLResponse}
+        
+        /// request progress
+        let progress: NSProgress
+        
+        /// requst return data
+        var data: NSData?
+        
+        /// error message
+        var error: NSError?
+        
+        init (task: NSURLSessionTask) {
+            self.task = task
+            self.progress = NSProgress(totalUnitCount: 0)
+        }
+        
+        // MARK: -URLSessionTaskDelegate
+        func URLSession(session: NSURLSession, task: NSURLSessionTask, willPerformHTTPRedirection response: NSHTTPURLResponse, newRequest request: NSURLRequest, completionHandler: (NSURLRequest?) -> Void) {
+            
+        }
+        
+        func URLSession(session: NSURLSession, task: NSURLSessionTask, didReceiveChallenge challenge: NSURLAuthenticationChallenge, completionHandler: (NSURLSessionAuthChallengeDisposition, NSURLCredential?) -> Void) {
+            
+        }
+        
+        func URLSession(session: NSURLSession, task: NSURLSessionTask, needNewBodyStream completionHandler: (NSInputStream?) -> Void) {
+            
+        }
+        
+        func URLSession(session: NSURLSession, task: NSURLSessionTask, didSendBodyData bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64) {
+            self.progress.totalUnitCount = totalBytesExpectedToSend
+            self.progress.completedUnitCount = totalBytesSent
+        }
+        
+        func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
+            self.task = task
+            self.error = error
+        }
+        
+    }
+
 }
 
-public class DataOperator {
-    /// session task
-    var task: NSURLSessionTask
-    
-    var response: NSHTTPURLResponse? { return task.response as? NSHTTPURLResponse}
-    
-    /// request progress
-    let progress: NSProgress
-    
-    /// requst return data
-    var data: NSData?
-    
-    /// error message
-    var error: NSError?
-    
-    init (task: NSURLSessionTask) {
-        self.task = task
-        self.progress = NSProgress(totalUnitCount: 0)
-    }
-    
-    // MARK: -URLSessionTaskDelegate
-    func URLSession(session: NSURLSession, task: NSURLSessionTask, willPerformHTTPRedirection response: NSHTTPURLResponse, newRequest request: NSURLRequest, completionHandler: (NSURLRequest?) -> Void) {
-        
-    }
-    
-    func URLSession(session: NSURLSession, task: NSURLSessionTask, didReceiveChallenge challenge: NSURLAuthenticationChallenge, completionHandler: (NSURLSessionAuthChallengeDisposition, NSURLCredential?) -> Void) {
-        
-    }
-    
-    func URLSession(session: NSURLSession, task: NSURLSessionTask, needNewBodyStream completionHandler: (NSInputStream?) -> Void) {
-        
-    }
-    
-    func URLSession(session: NSURLSession, task: NSURLSessionTask, didSendBodyData bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64) {
-        self.progress.totalUnitCount = totalBytesExpectedToSend
-        self.progress.completedUnitCount = totalBytesSent
-    }
-    
-    func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
-        self.task = task
-        self.error = error
-    }
-    
-}
 
 extension Requset {
     
