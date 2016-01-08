@@ -17,6 +17,23 @@ extension Manager {
     
     private func download(downloadDataType: DownloadDataType, destination: Requset.DownloadFileDestination) -> Requset {
         
+        var downloadTask: NSURLSessionDownloadTask!
+        switch downloadDataType {
+        case .Request(let URLRequest):
+            dispatch_sync(queue) { downloadTask = self.session.downloadTaskWithRequest(URLRequest) }
+        case .ResumeData(let resumeData):
+            dispatch_sync(queue) { downloadTask = self.session.downloadTaskWithResumeData(resumeData) }
+        }
+        
+        let request = Requset(session: self.session, task: downloadTask)
+        if let downloadDelegate = request.dataOperator as? Requset.DownloadTaskDelegate {
+            downloadDelegate.downloadDestinationToURL = { (session, task, URL) in
+                return destination(URL, task.response as! NSHTTPURLResponse)
+            }
+        }
+        delegate[downloadTask] = request.dataOperator
+        
+        return request
     }
     
     public func download(
@@ -54,6 +71,42 @@ extension Requset {
                 }
                 return temporaryURLs
             }
+    }
+    
+    
+    /// DownloadDelegate
+    class DownloadTaskDelegate: DataOperator, NSURLSessionDownloadDelegate {
+        
+        var downloadTask: NSURLSessionDownloadTask?
+        var resumeData: NSData?
+        
+        override var data: NSData? { return resumeData }
+        
+        var downloadDestinationToURL: ((NSURLSession, NSURLSessionDownloadTask, NSURL) -> NSURL)?
+        
+        
+        func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didFinishDownloadingToURL location: NSURL) {
+            if let downloadDestinationToURL = downloadDestinationToURL {
+                let destinationToURL = downloadDestinationToURL(session, downloadTask, location)
+                do {
+                    try NSFileManager.defaultManager().moveItemAtURL(location, toURL: destinationToURL)
+                } catch {
+                    self.error = error as NSError
+                }
+            }
+        }
+        
+        func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
+            
+            self.progress.totalUnitCount = totalBytesExpectedToWrite
+            self.progress.completedUnitCount = bytesWritten
+        }
+        
+        func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didResumeAtOffset fileOffset: Int64, expectedTotalBytes: Int64) {
+            self.progress.totalUnitCount = expectedTotalBytes
+            self.progress.completedUnitCount = fileOffset
+        }
+        
     }
     
     

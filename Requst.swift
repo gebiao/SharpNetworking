@@ -31,7 +31,7 @@ public class Requset {
     }
     
     
-    public class DataOperator {
+    public class DataOperator: NSObject {
         /// session task
         var task: NSURLSessionTask
         
@@ -41,7 +41,7 @@ public class Requset {
         let progress: NSProgress
         
         /// requst return data
-        var data: NSData?
+        var data: NSData? { return nil }
         
         /// error message
         var error: NSError?
