@@ -87,24 +87,23 @@ public class Manager {
         dispatch_sync(queue) { task = self.session.dataTaskWithRequest(URLRequest) }
         return Requset(session: session, task: task)
     }
-    
-    
-    
-    
 }
 
 
 public class SessionDelegate : NSObject, NSURLSessionDelegate {
     
-    private var manageTaskList: [Int : NSURLSessionTask] = [ : ]
+    private var manageTaskList: [Int : Requset.DataOperator] = [:]
+    private let queue: dispatch_queue_t = dispatch_queue_create(nil, DISPATCH_QUEUE_SERIAL)
     
-    subscript (sessionTask: NSURLSessionTask) -> Requset.DataOperator {
+    subscript (sessionTask: NSURLSessionTask) -> Requset.DataOperator? {
         get {
-            
+            var task: Requset.DataOperator?
+            dispatch_sync(queue) { task = self.manageTaskList[sessionTask.taskIdentifier] }
+            return task
         }
         
         set {
-            
+            dispatch_barrier_async(queue) { self.manageTaskList[sessionTask.taskIdentifier] = newValue }
         }
     }
     //MARK: - sessionDelegate
