@@ -121,19 +121,23 @@ public class Manager {
         //MARK: -DownloadDelegate
         var downloadTaskDidWrited: ((NSURLSession, NSURLSessionDownloadTask, Int64, Int64, Int64) -> Void)?
         var downloadResumeTaskFileOffset: ((NSURLSession, NSURLSessionDownloadTask, Int64, Int64) -> Void)?
+        var downloadDataCompleted: ((NSURLSession, NSURLSessionDownloadTask, NSURL, NSData?) -> Void)?
         
         public func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didFinishDownloadingToURL location: NSURL) {
             if let downloadDelegate = self[downloadTask] as? Request.DownloadTaskDelegate {
-                downloadDelegate.URLSession(session, downloadTask: downloadTask, didFinishDownloadingToURL: location)
-                if let downloadTaskDidWrited = downloadTaskDidWrited {
-                    downloadDelegate.downloadTaskDidWrited = downloadTaskDidWrited
+                if let downloadDataCompleted = downloadDataCompleted {
+                    downloadDelegate.downloadDataCompleted = downloadDataCompleted
                 }
+                downloadDelegate.URLSession(session, downloadTask: downloadTask, didFinishDownloadingToURL: location)
             }
         }
         
         public func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
             if let downloadDelegate = self[downloadTask] as? Request.DownloadTaskDelegate {
                 downloadDelegate.URLSession(session, downloadTask: downloadTask, didWriteData: bytesWritten, totalBytesWritten: totalBytesWritten, totalBytesExpectedToWrite: totalBytesExpectedToWrite)
+                if let downloadTaskDidWrited = downloadTaskDidWrited {
+                    downloadDelegate.downloadTaskDidWrited = downloadTaskDidWrited
+                }
             }
         }
         

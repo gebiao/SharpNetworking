@@ -88,6 +88,7 @@ extension Request {
         var downloadDestinationToURL: ((NSURLSession, NSURLSessionDownloadTask, NSURL) -> NSURL)?
         var downloadTaskDidWrited: ((NSURLSession, NSURLSessionDownloadTask, Int64, Int64, Int64) -> Void)?
         var downloadResumeTaskFileOffset: ((NSURLSession, NSURLSessionDownloadTask, Int64, Int64) -> Void)?
+        var downloadDataCompleted: ((NSURLSession, NSURLSessionDownloadTask, NSURL, NSData?) -> Void)?
         
         func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didFinishDownloadingToURL location: NSURL) {
             if let downloadDestinationToURL = downloadDestinationToURL {
@@ -97,6 +98,11 @@ extension Request {
                     print("download destination: \(destinationToURL)")
                 } catch {
                     self.error = error as NSError
+                    print("download write to file error: \(error)")
+                }
+                if let downloadDataCompleted = downloadDataCompleted {
+                    let data = NSData.init(contentsOfURL: destinationToURL)
+                    downloadDataCompleted(session, downloadTask, destinationToURL, data)
                 }
             }
         }
@@ -105,7 +111,7 @@ extension Request {
             
             progress.totalUnitCount = totalBytesExpectedToWrite
             progress.completedUnitCount = bytesWritten
-            print("download progress: \(progress.description)")
+            print("download progress: \(progress.localizedDescription)")
             if let downloadTaskDidWrited = downloadTaskDidWrited {
                 downloadTaskDidWrited(session, downloadTask, bytesWritten, totalBytesWritten, totalBytesExpectedToWrite)
             }

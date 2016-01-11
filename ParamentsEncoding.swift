@@ -85,6 +85,8 @@ public enum ParameteEncoding {
             print("custom")
         }
         
+        print("Application request URL: \(URLRequst.URL)")
+        
         return (URLRequst, encodError)
     }
     
