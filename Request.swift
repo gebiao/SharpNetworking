@@ -43,6 +43,7 @@ public class Request {
     
     
     public func resume() {
+        print("task: \(task)")
         task.resume()
     }
     
@@ -70,6 +71,7 @@ public class Request {
         
         /// request progress
         let progress: NSProgress
+        
         
         /// requst return data
         var data: NSData? { return nil }

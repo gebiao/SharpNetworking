@@ -17,6 +17,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var backImageView: UIImageView!
     @IBOutlet weak var progressLabel: UILabel!
     var progress: NSProgress = NSProgress(totalUnitCount: 0)
+    var resumeData: NSData?
     var request: Request!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,10 +53,18 @@ class ViewController: UIViewController {
     
     @IBAction func cancelAction(sender: AnyObject) {
         request.cancel()
+        if let delegate = request.delegate as? Request.DownloadTaskDelegate {
+            self.resumeData = delegate.resumeData
+        }
     }
     
     @IBAction func goOnAction(sender: AnyObject) {
-        request.resume()
+        if let resumeData = resumeData {
+            let destination = Request.suggestDownloadFileDesination(.DocumentDirectory, domains: .UserDomainMask)
+            download(resumeData, destination: destination)
+        } else {
+            request.resume()
+        }
     }
 }
 

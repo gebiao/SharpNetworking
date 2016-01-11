@@ -30,3 +30,10 @@ public func download(
         return Manager.sharedInstance.download(method, URLString: URLString, heard: heard, destination: destination)
         
 }
+
+public func download(
+    resumeData: NSData,
+    destination: Request.DownloadFileDestination) -> Request {
+        return Manager.sharedInstance.download(resumeData, destination: destination)
+        
+}
