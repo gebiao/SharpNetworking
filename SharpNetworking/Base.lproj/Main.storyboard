@@ -39,7 +39,7 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GBB-Xg-oaV">
-                                <rect key="frame" x="152" y="308" width="70" height="30"/>
+                                <rect key="frame" x="120" y="308" width="70" height="30"/>
                                 <color key="backgroundColor" red="0.52941176469999995" green="0.52941176469999995" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="70" id="DMb-wd-LAS"/>
@@ -53,7 +53,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AaQ-3i-4L6">
-                                <rect key="frame" x="292" y="308" width="70" height="30"/>
+                                <rect key="frame" x="220" y="308" width="70" height="30"/>
                                 <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="pHA-AO-fNM"/>
@@ -194,6 +194,21 @@
                                     <action selector="cancelAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XMS-7f-X6v"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y6p-h8-bFm">
+                                <rect key="frame" x="321" y="308" width="70" height="30"/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="70" id="9LO-HC-kEO"/>
+                                    <constraint firstAttribute="height" constant="30" id="uw8-no-Q1O"/>
+                                </constraints>
+                                <state key="normal" title="继续">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="cancelAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JHo-4x-e4d"/>
+                                    <action selector="goOnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Yhe-23-OFy"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -207,6 +222,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="cjU-nX-3vf" secondAttribute="trailing" constant="10" id="FHG-AW-Zbs"/>
                             <constraint firstItem="eAG-Up-xVe" firstAttribute="leading" secondItem="LTq-zj-Kza" secondAttribute="leading" id="G4O-PE-sCu"/>
                             <constraint firstItem="RbS-nO-C68" firstAttribute="baseline" secondItem="LTq-zj-Kza" secondAttribute="baseline" id="Gko-vd-VVW"/>
+                            <constraint firstItem="AaQ-3i-4L6" firstAttribute="leading" secondItem="GBB-Xg-oaV" secondAttribute="trailing" constant="30" id="H3X-3g-Yx7"/>
                             <constraint firstItem="ln3-14-VIV" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Ift-yH-PkW"/>
                             <constraint firstItem="v08-hu-dYm" firstAttribute="leading" secondItem="qEg-ub-Lhb" secondAttribute="leading" id="IoY-8g-E8Y"/>
                             <constraint firstItem="qEg-ub-Lhb" firstAttribute="leading" secondItem="6Fk-9p-W3L" secondAttribute="leading" id="LLd-7F-yqQ"/>
@@ -226,11 +242,20 @@
                             <constraint firstItem="e1c-AC-ER9" firstAttribute="leading" secondItem="GRo-e3-7dO" secondAttribute="trailing" constant="70" id="gJX-CF-idm"/>
                             <constraint firstItem="RbS-nO-C68" firstAttribute="top" secondItem="GBB-Xg-oaV" secondAttribute="bottom" constant="49" id="hBH-86-aqt"/>
                             <constraint firstItem="RbS-nO-C68" firstAttribute="baseline" secondItem="GWg-PX-8QD" secondAttribute="baseline" id="lBC-oA-Fb9"/>
+                            <constraint firstItem="Y6p-h8-bFm" firstAttribute="leading" secondItem="AaQ-3i-4L6" secondAttribute="trailing" constant="31" id="mRC-D4-3Ea"/>
                             <constraint firstItem="6Fk-9p-W3L" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ngx-jI-p2w"/>
                             <constraint firstItem="LTq-zj-Kza" firstAttribute="top" secondItem="qEg-ub-Lhb" secondAttribute="bottom" constant="15" id="oae-aw-VxC"/>
                             <constraint firstItem="ln3-14-VIV" firstAttribute="top" secondItem="6Fk-9p-W3L" secondAttribute="bottom" constant="90" id="p5W-4T-QPh"/>
+                            <constraint firstItem="Y6p-h8-bFm" firstAttribute="baseline" secondItem="AaQ-3i-4L6" secondAttribute="baseline" id="sAE-6r-wec"/>
+                            <constraint firstItem="GBB-Xg-oaV" firstAttribute="leading" secondItem="ln3-14-VIV" secondAttribute="trailing" constant="30" id="sle-lE-f4J"/>
                             <constraint firstItem="GBB-Xg-oaV" firstAttribute="baseline" secondItem="AaQ-3i-4L6" secondAttribute="baseline" id="uKd-Kn-sEF"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="OyK-7j-2vu"/>
+                                <exclude reference="Cls-KD-jei"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="backImageView" destination="6Fk-9p-W3L" id="5pd-UG-pIY"/>
