@@ -68,7 +68,7 @@ public class Manager {
         self.session.invalidateAndCancel()
     }
     
-    public func request(method: Method, URLString: String, parameters: [String : AnyObject]? = nil, encoding: ParameteEncoding = .URL, heard: [String : String]? = nil) -> Requset {
+    public func request(method: Method, URLString: String, parameters: [String : AnyObject]? = nil, encoding: ParameteEncoding = .URL, heard: [String : String]? = nil) -> Request {
         return URLRequest(method, URLString: URLString, parameters: parameters, heard: heard)
     }
     
@@ -77,26 +77,26 @@ public class Manager {
         URLString: String,
         parameters: [String : AnyObject]?,
         encoding: ParameteEncoding = .URL,
-        heard: [String : String]?) -> Requset {
+        heard: [String : String]?) -> Request {
             let mutableRequest = NSMutableURLRequest(URL: NSURL.init(string: URLString)!)
             return request(encoding.encoding(mutableRequest, parametes: parameters).0)
     }
     
-    func request(URLRequest: NSMutableURLRequest) -> Requset {
+    func request(URLRequest: NSMutableURLRequest) -> Request {
         var task: NSURLSessionTask!
         dispatch_sync(queue) { task = self.session.dataTaskWithRequest(URLRequest) }
-        return Requset(session: session, task: task)
+        return Request(session: session, task: task)
     }
     
     // SEEEION DELEGATE
     public class SessionDelegate :  NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLSessionDataDelegate, NSURLSessionDownloadDelegate {
         
-        private var manageTaskList: [Int : Requset.TaskDelegate] = [:]
+        private var manageTaskList: [Int : Request.TaskDelegate] = [:]
         private let queue: dispatch_queue_t = dispatch_queue_create(nil, DISPATCH_QUEUE_SERIAL)
         
-        subscript (sessionTask: NSURLSessionTask) -> Requset.TaskDelegate? {
+        subscript (sessionTask: NSURLSessionTask) -> Request.TaskDelegate? {
             get {
-                var task: Requset.TaskDelegate?
+                var task: Request.TaskDelegate?
                 dispatch_sync(queue) { task = self.manageTaskList[sessionTask.taskIdentifier] }
                 return task
             }
@@ -118,17 +118,32 @@ public class Manager {
             
         }
         
-        //MARK: -downloadDelegate
+        //MARK: -DownloadDelegate
+        var downloadTaskDidWrited: ((NSURLSession, NSURLSessionDownloadTask, Int64, Int64, Int64) -> Void)?
+        var downloadResumeTaskFileOffset: ((NSURLSession, NSURLSessionDownloadTask, Int64, Int64) -> Void)?
+        
         public func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didFinishDownloadingToURL location: NSURL) {
-            
+            if let downloadDelegate = self[downloadTask] as? Request.DownloadTaskDelegate {
+                downloadDelegate.URLSession(session, downloadTask: downloadTask, didFinishDownloadingToURL: location)
+                if let downloadTaskDidWrited = downloadTaskDidWrited {
+                    downloadDelegate.downloadTaskDidWrited = downloadTaskDidWrited
+                }
+            }
         }
         
         public func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
-            
+            if let downloadDelegate = self[downloadTask] as? Request.DownloadTaskDelegate {
+                downloadDelegate.URLSession(session, downloadTask: downloadTask, didWriteData: bytesWritten, totalBytesWritten: totalBytesWritten, totalBytesExpectedToWrite: totalBytesExpectedToWrite)
+            }
         }
         
         public func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didResumeAtOffset fileOffset: Int64, expectedTotalBytes: Int64) {
-            
+            if let downloadDelegate = self[downloadTask] as? Request.DownloadTaskDelegate {
+                downloadDelegate.URLSession(session, downloadTask: downloadTask, didResumeAtOffset: fileOffset, expectedTotalBytes: expectedTotalBytes)
+                if let downloadResumeTaskFileOffset = downloadResumeTaskFileOffset {
+                    downloadDelegate.downloadResumeTaskFileOffset = downloadResumeTaskFileOffset
+                }
+            }
         }
         
         //MARK: -SessionTaskDelegate

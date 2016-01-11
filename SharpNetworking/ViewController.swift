@@ -17,14 +17,22 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var backImageView: UIImageView!
     @IBOutlet weak var progressLabel: UILabel!
+    var progress: NSProgress = NSProgress(totalUnitCount: 0)
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let destination = Requset.suggestDownloadFileDesination(.DocumentDirectory, domains: .UserDomainMask)
-        let request = download(.GET, URLString: imageUrl, destination: destination)
         
     }
     @IBAction func startAction(sender: AnyObject) {
+        let destination = Request.suggestDownloadFileDesination(.DocumentDirectory, domains: .UserDomainMask)
+        download(.GET, URLString: imageUrl, destination: destination)
+        Manager.sharedInstance.delegate.downloadTaskDidWrited = { [unowned self](session, downloadTask, didWriteData, totalBytesWritten, totalBytesExpectedToWrite) in
+            self.progress.totalUnitCount = totalBytesExpectedToWrite
+            self.progress.completedUnitCount = totalBytesWritten
+            dispatch_async(dispatch_get_main_queue()) { self.progressLabel.text = self.progress.description }
+        }
+        
+        
     }
     
     @IBAction func suspendAction(sender: AnyObject) {

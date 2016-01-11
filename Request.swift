@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Requset {
+public class Request {
     /// The session is create session
     public let session: NSURLSession
     
@@ -115,7 +115,7 @@ public class Requset {
 }
 
 
-extension Requset {
+extension Request {
     
     
 }

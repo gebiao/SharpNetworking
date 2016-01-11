@@ -15,7 +15,7 @@ public func request(
     parameters: [String : AnyObject]? = nil,
     encoding: ParameteEncoding = .URL,
     heard: [String : String]? = nil
-    ) -> Requset {
+    ) -> Request {
         
         return Manager.sharedInstance.request(method, URLString: URLString, parameters: parameters, encoding: encoding, heard: heard)
 }
@@ -26,7 +26,7 @@ public func download(
     parameters: [String : AnyObject]? = nil,
     encoding: ParameteEncoding = .URL,
     heard: [String : String]? = nil,
-    destination: Requset.DownloadFileDestination) -> Requset {
+    destination: Request.DownloadFileDestination) -> Request {
         return Manager.sharedInstance.download(method, URLString: URLString, heard: heard, destination: destination)
         
 }

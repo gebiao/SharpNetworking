@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		673637041C3DF7EE007B3BC6 /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673637031C3DF7EE007B3BC6 /* Manager.swift */; };
 		673637061C3DF812007B3BC6 /* ParamentsEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673637051C3DF812007B3BC6 /* ParamentsEncoding.swift */; };
-		673637081C3DF81B007B3BC6 /* Requst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673637071C3DF81B007B3BC6 /* Requst.swift */; };
+		673637081C3DF81B007B3BC6 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673637071C3DF81B007B3BC6 /* Request.swift */; };
 		6736370A1C3DF825007B3BC6 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673637091C3DF825007B3BC6 /* Response.swift */; };
 		6736370C1C3DF836007B3BC6 /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6736370B1C3DF836007B3BC6 /* Download.swift */; };
 		6736370E1C3DF840007B3BC6 /* Upload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6736370D1C3DF840007B3BC6 /* Upload.swift */; };
@@ -26,7 +26,7 @@
 /* Begin PBXFileReference section */
 		673637031C3DF7EE007B3BC6 /* Manager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Manager.swift; sourceTree = SOURCE_ROOT; };
 		673637051C3DF812007B3BC6 /* ParamentsEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParamentsEncoding.swift; sourceTree = SOURCE_ROOT; };
-		673637071C3DF81B007B3BC6 /* Requst.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Requst.swift; sourceTree = SOURCE_ROOT; };
+		673637071C3DF81B007B3BC6 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = SOURCE_ROOT; };
 		673637091C3DF825007B3BC6 /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = SOURCE_ROOT; };
 		6736370B1C3DF836007B3BC6 /* Download.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Download.swift; sourceTree = SOURCE_ROOT; };
 		6736370D1C3DF840007B3BC6 /* Upload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Upload.swift; sourceTree = SOURCE_ROOT; };
@@ -58,7 +58,7 @@
 			children = (
 				673637031C3DF7EE007B3BC6 /* Manager.swift */,
 				673637051C3DF812007B3BC6 /* ParamentsEncoding.swift */,
-				673637071C3DF81B007B3BC6 /* Requst.swift */,
+				673637071C3DF81B007B3BC6 /* Request.swift */,
 				673637091C3DF825007B3BC6 /* Response.swift */,
 			);
 			name = Core;
@@ -196,7 +196,7 @@
 				6736370A1C3DF825007B3BC6 /* Response.swift in Sources */,
 				6736370C1C3DF836007B3BC6 /* Download.swift in Sources */,
 				676133BC1C3E353100ED7C0C /* SharpNetworking.swift in Sources */,
-				673637081C3DF81B007B3BC6 /* Requst.swift in Sources */,
+				673637081C3DF81B007B3BC6 /* Request.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
