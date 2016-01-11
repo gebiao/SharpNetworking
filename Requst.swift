@@ -13,25 +13,56 @@ public class Requset {
     public let session: NSURLSession
     
     /// The task is session task
-    public var task: NSURLSessionTask { return dataOperator.task }
+    public var task: NSURLSessionTask { return delegate.task }
     
     /// The request is sent to server
     public var request: NSURLRequest? { return task.originalRequest }
     
     /// The dataOperator is data, error, task and progress operating
-    public var dataOperator: DataOperator
+    public var delegate: TaskDelegate
     
     /// The progress is requst progress
-    public var progress: NSProgress? { return dataOperator.progress }
+    public var progress: NSProgress? { return delegate.progress }
     
     //MARK: // LifeCycle
     init (session: NSURLSession, task: NSURLSessionTask) {
-        self.dataOperator = DownloadTaskDelegate(task: task)
+        
+        switch task {
+        case is NSURLSessionDataTask:
+            self.delegate = DataTaskDelegate(task: task)
+        case is NSURLSessionUploadTask:
+            self.delegate = UploadTaskDelegate(task: task)
+        case is NSURLSessionDownloadTask:
+            self.delegate = DownloadTaskDelegate(task: task)
+        default:
+            self.delegate = TaskDelegate(task: task)
+        }
+        
         self.session = session
     }
     
     
-    public class DataOperator: NSObject {
+    public func resume() {
+        task.resume()
+    }
+    
+    public func suspend() {
+        task.suspend()
+    }
+    
+    public func cancel() {
+        if let downloadDelegate = delegate as? DownloadTaskDelegate,
+            downloadTask = downloadDelegate.downloadTask {
+                downloadTask.cancelByProducingResumeData({ (resumeData) -> Void in
+                    downloadDelegate.resumeData = resumeData
+                })
+        } else {
+            task.cancel()
+        }
+    }
+    
+    
+    public class TaskDelegate: NSObject {
         /// session task
         var task: NSURLSessionTask
         
@@ -76,23 +107,9 @@ public class Requset {
         
     }
     
-    public func resume() {
-        task.resume()
-    }
-    
-    public func suspend() {
-        task.suspend()
-    }
-    
-    public func cancel() {
-        if let downloadDelegate = dataOperator as? DownloadTaskDelegate,
-            downloadTask = downloadDelegate.downloadTask {
-                downloadTask.cancelByProducingResumeData({ (resumeData) -> Void in
-                    downloadDelegate.resumeData = resumeData
-                })
-        } else {
-            task.cancel()
-        }
+    //MARK: -DataDelegate
+    public class DataTaskDelegate: TaskDelegate {
+        
     }
     
 }

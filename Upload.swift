@@ -7,3 +7,12 @@
 //
 
 import Foundation
+
+extension Requset {
+    
+    
+    
+    public class UploadTaskDelegate: TaskDelegate {
+        
+    }
+}

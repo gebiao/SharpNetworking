@@ -26,12 +26,12 @@ extension Manager {
         }
         
         let request = Requset(session: session, task: downloadTask)
-        if let downloadDelegate = request.dataOperator as? Requset.DownloadTaskDelegate {
+        if let downloadDelegate = request.delegate as? Requset.DownloadTaskDelegate {
             downloadDelegate.downloadDestinationToURL = { (session, task, URL) in
                 return destination(URL, task.response as! NSHTTPURLResponse)
             }
         }
-        delegate[downloadTask] = request.dataOperator
+        delegate[downloadTask] = request.delegate
         if startRequestImmediate {
             request.resume()
         }
@@ -78,7 +78,7 @@ extension Requset {
     
     
     /// DownloadDelegate
-    class DownloadTaskDelegate: DataOperator, NSURLSessionDownloadDelegate {
+    class DownloadTaskDelegate: TaskDelegate, NSURLSessionDownloadDelegate {
         
         var downloadTask: NSURLSessionDownloadTask? { return task as? NSURLSessionDownloadTask }
         var resumeData: NSData?

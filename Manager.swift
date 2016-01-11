@@ -87,38 +87,93 @@ public class Manager {
         dispatch_sync(queue) { task = self.session.dataTaskWithRequest(URLRequest) }
         return Requset(session: session, task: task)
     }
+    
+    // SEEEION DELEGATE
+    public class SessionDelegate :  NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLSessionDataDelegate, NSURLSessionDownloadDelegate {
+        
+        private var manageTaskList: [Int : Requset.TaskDelegate] = [:]
+        private let queue: dispatch_queue_t = dispatch_queue_create(nil, DISPATCH_QUEUE_SERIAL)
+        
+        subscript (sessionTask: NSURLSessionTask) -> Requset.TaskDelegate? {
+            get {
+                var task: Requset.TaskDelegate?
+                dispatch_sync(queue) { task = self.manageTaskList[sessionTask.taskIdentifier] }
+                return task
+            }
+            
+            set {
+                dispatch_barrier_async(queue) { self.manageTaskList[sessionTask.taskIdentifier] = newValue }
+            }
+        }
+        //MARK: - sessionDelegate
+        public func URLSession(session: NSURLSession, didBecomeInvalidWithError error: NSError?) {
+            
+        }
+        
+        public func URLSession(session: NSURLSession, didReceiveChallenge challenge: NSURLAuthenticationChallenge, completionHandler: (NSURLSessionAuthChallengeDisposition, NSURLCredential?) -> Void) {
+            
+        }
+        
+        public func URLSessionDidFinishEventsForBackgroundURLSession(session: NSURLSession) {
+            
+        }
+        
+        //MARK: -downloadDelegate
+        public func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didFinishDownloadingToURL location: NSURL) {
+            
+        }
+        
+        public func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
+            
+        }
+        
+        public func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didResumeAtOffset fileOffset: Int64, expectedTotalBytes: Int64) {
+            
+        }
+        
+        //MARK: -SessionTaskDelegate
+        public func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveResponse response: NSURLResponse, completionHandler: (NSURLSessionResponseDisposition) -> Void) {
+            
+        }
+        
+        public func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didBecomeDownloadTask downloadTask: NSURLSessionDownloadTask) {
+            
+        }
+        
+        public func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData) {
+            
+        }
+        
+        public func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, willCacheResponse proposedResponse: NSCachedURLResponse, completionHandler: (NSCachedURLResponse?) -> Void) {
+            
+        }
+        
+        //MAKE: -SessionTaskDelegate
+        public func URLSession(session: NSURLSession, task: NSURLSessionTask, willPerformHTTPRedirection response: NSHTTPURLResponse, newRequest request: NSURLRequest, completionHandler: (NSURLRequest?) -> Void) {
+            
+        }
+        
+        public func URLSession(session: NSURLSession, task: NSURLSessionTask, didReceiveChallenge challenge: NSURLAuthenticationChallenge, completionHandler: (NSURLSessionAuthChallengeDisposition, NSURLCredential?) -> Void) {
+            
+        }
+        
+        public func URLSession(session: NSURLSession, task: NSURLSessionTask, needNewBodyStream completionHandler: (NSInputStream?) -> Void) {
+            
+        }
+        
+        public func URLSession(session: NSURLSession, task: NSURLSessionTask, didSendBodyData bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64) {
+            
+        }
+        
+        public func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
+            
+        }
+        
+    }
+    
 }
 
 
-public class SessionDelegate :  NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLSessionDataDelegate, NSURLSessionDownloadDelegate {
-    
-    private var manageTaskList: [Int : Requset.DataOperator] = [:]
-    private let queue: dispatch_queue_t = dispatch_queue_create(nil, DISPATCH_QUEUE_SERIAL)
-    
-    subscript (sessionTask: NSURLSessionTask) -> Requset.DataOperator? {
-        get {
-            var task: Requset.DataOperator?
-            dispatch_sync(queue) { task = self.manageTaskList[sessionTask.taskIdentifier] }
-            return task
-        }
-        
-        set {
-            dispatch_barrier_async(queue) { self.manageTaskList[sessionTask.taskIdentifier] = newValue }
-        }
-    }
-    //MARK: - sessionDelegate
-    public func URLSession(session: NSURLSession, didBecomeInvalidWithError error: NSError?) {
-        
-    }
-    
-    public func URLSession(session: NSURLSession, didReceiveChallenge challenge: NSURLAuthenticationChallenge, completionHandler: (NSURLSessionAuthChallengeDisposition, NSURLCredential?) -> Void) {
-        
-    }
-    
-    public func URLSessionDidFinishEventsForBackgroundURLSession(session: NSURLSession) {
-        
-    }
-}
 
 
 
