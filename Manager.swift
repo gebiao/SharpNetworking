@@ -90,7 +90,7 @@ public class Manager {
 }
 
 
-public class SessionDelegate : NSObject, NSURLSessionDelegate {
+public class SessionDelegate :  NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLSessionDataDelegate, NSURLSessionDownloadDelegate {
     
     private var manageTaskList: [Int : Requset.DataOperator] = [:]
     private let queue: dispatch_queue_t = dispatch_queue_create(nil, DISPATCH_QUEUE_SERIAL)

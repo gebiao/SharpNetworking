@@ -25,13 +25,16 @@ extension Manager {
             dispatch_sync(queue) { downloadTask = self.session.downloadTaskWithResumeData(resumeData) }
         }
         
-        let request = Requset(session: self.session, task: downloadTask)
+        let request = Requset(session: session, task: downloadTask)
         if let downloadDelegate = request.dataOperator as? Requset.DownloadTaskDelegate {
             downloadDelegate.downloadDestinationToURL = { (session, task, URL) in
                 return destination(URL, task.response as! NSHTTPURLResponse)
             }
         }
         delegate[downloadTask] = request.dataOperator
+        if startRequestImmediate {
+            request.resume()
+        }
         
         return request
     }
@@ -61,7 +64,7 @@ extension Requset {
     
     public typealias DownloadFileDestination = (NSURL, NSHTTPURLResponse) -> NSURL
     
-    public func suggestDownloadFileDesination(
+    public class func suggestDownloadFileDesination(
         directory: NSSearchPathDirectory = .DocumentDirectory,
         domains: NSSearchPathDomainMask = .UserDomainMask) -> DownloadFileDestination {
             return { temporaryURLs, response -> NSURL in
@@ -77,13 +80,12 @@ extension Requset {
     /// DownloadDelegate
     class DownloadTaskDelegate: DataOperator, NSURLSessionDownloadDelegate {
         
-        var downloadTask: NSURLSessionDownloadTask?
+        var downloadTask: NSURLSessionDownloadTask? { return task as? NSURLSessionDownloadTask }
         var resumeData: NSData?
         
         override var data: NSData? { return resumeData }
         
         var downloadDestinationToURL: ((NSURLSession, NSURLSessionDownloadTask, NSURL) -> NSURL)?
-        
         
         func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didFinishDownloadingToURL location: NSURL) {
             if let downloadDestinationToURL = downloadDestinationToURL {

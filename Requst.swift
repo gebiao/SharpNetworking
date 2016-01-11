@@ -26,7 +26,7 @@ public class Requset {
     
     //MARK: // LifeCycle
     init (session: NSURLSession, task: NSURLSessionTask) {
-        self.dataOperator = DataOperator(task: task)
+        self.dataOperator = DownloadTaskDelegate(task: task)
         self.session = session
     }
     
@@ -75,7 +75,26 @@ public class Requset {
         }
         
     }
-
+    
+    public func resume() {
+        task.resume()
+    }
+    
+    public func suspend() {
+        task.suspend()
+    }
+    
+    public func cancel() {
+        if let downloadDelegate = dataOperator as? DownloadTaskDelegate,
+            downloadTask = downloadDelegate.downloadTask {
+                downloadTask.cancelByProducingResumeData({ (resumeData) -> Void in
+                    downloadDelegate.resumeData = resumeData
+                })
+        } else {
+            task.cancel()
+        }
+    }
+    
 }
 
 
