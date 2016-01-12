@@ -61,6 +61,10 @@ public class Request {
         }
     }
     
+    public typealias SucceeClosure = (NSURLSessionTask, NSData) -> Void
+    public typealias FailureClosure = (NSURLSessionTask, NSError) -> Void
+    public typealias ProgressClosure = (NSProgress) -> Void
+    
     
     public class TaskDelegate: NSObject {
         /// session task
@@ -77,10 +81,6 @@ public class Request {
         
         /// error message
         public var error: NSError?
-        
-        public typealias SucceeClosure = (NSURLSessionTask, NSData) -> Void
-        public typealias FailureClosure = (NSURLSessionTask, NSError) -> Void
-        public typealias ProgressClosure = (NSProgress) -> Void
         
         //Succee
         public var succeeClosure: SucceeClosure?
@@ -128,7 +128,7 @@ public class Request {
     public class DataTaskDelegate: TaskDelegate {
         
         func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveResponse response: NSURLResponse, completionHandler: (NSURLSessionResponseDisposition) -> Void) {
-
+            
         }
         
         func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didBecomeStreamTask streamTask: NSURLSessionStreamTask) {

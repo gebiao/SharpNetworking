@@ -68,8 +68,12 @@ public class Manager {
         self.session.invalidateAndCancel()
     }
     
-    public func request(method: Method, URLString: String, parameters: [String : AnyObject]? = nil, encoding: ParameteEncoding = .URL, heard: [String : String]? = nil) -> Request {
-        return URLRequest(method, URLString: URLString, parameters: parameters, heard: heard)
+    public func request(method: Method, URLString: String, parameters: [String : AnyObject]? = nil, encoding: ParameteEncoding = .URL, heard: [String : String]? = nil, progress: Request.ProgressClosure?, succee: Request.SucceeClosure?, failure: Request.FailureClosure?) -> Request {
+        let request = URLRequest(method, URLString: URLString, parameters: parameters, heard: heard)
+        request.delegate.progressClosure = progress
+        request.delegate.succeeClosure = succee
+        request.delegate.failureClosure = failure
+        return request
     }
     
     func URLRequest(
@@ -87,6 +91,7 @@ public class Manager {
         dispatch_sync(queue) { task = self.session.dataTaskWithRequest(URLRequest) }
         return Request(session: session, task: task)
     }
+    
     
     // SEEEION DELEGATE
     public class SessionDelegate :  NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLSessionDataDelegate, NSURLSessionDownloadDelegate {

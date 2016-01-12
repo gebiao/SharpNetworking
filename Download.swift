@@ -46,9 +46,9 @@ extension Manager {
         encoding: ParameteEncoding = .URL,
         heard: [String : String]?,
         destination: Request.DownloadFileDestination,
-        progress: Request.TaskDelegate.ProgressClosure? = nil,
-        succee: Request.TaskDelegate.SucceeClosure? = nil,
-        failure: Request.TaskDelegate.FailureClosure? = nil) -> Request {
+        progress: Request.ProgressClosure? = nil,
+        succee: Request.SucceeClosure? = nil,
+        failure: Request.FailureClosure? = nil) -> Request {
             let mutableRequest = NSMutableURLRequest(URL: NSURL.init(string: URLString)!)
             let requestInstance = request(encoding.encoding(mutableRequest, parametes: parameters).0, destination: destination)
             requestInstance.delegate.progressClosure = progress
@@ -63,9 +63,9 @@ extension Manager {
     
     public func download(
         resumeData: NSData, destination: Request.DownloadFileDestination,
-        progress: Request.TaskDelegate.ProgressClosure? = nil,
-        succee: Request.TaskDelegate.SucceeClosure? = nil,
-        failure: Request.TaskDelegate.FailureClosure? = nil) -> Request {
+        progress: Request.ProgressClosure? = nil,
+        succee: Request.SucceeClosure? = nil,
+        failure: Request.FailureClosure? = nil) -> Request {
             let requestInstance = download(.ResumeData(resumeData), destination: destination)
             requestInstance.delegate.progressClosure = progress
             requestInstance.delegate.succeeClosure = succee

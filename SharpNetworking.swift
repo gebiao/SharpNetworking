@@ -14,10 +14,12 @@ public func request(
     URLString: String,
     parameters: [String : AnyObject]? = nil,
     encoding: ParameteEncoding = .URL,
-    heard: [String : String]? = nil
-    ) -> Request {
+    heard: [String : String]? = nil,
+    progress: Request.ProgressClosure?,
+    succee: Request.SucceeClosure?,
+    failure: Request.FailureClosure?) -> Request {
         
-        return Manager.sharedInstance.request(method, URLString: URLString, parameters: parameters, encoding: encoding, heard: heard)
+        return Manager.sharedInstance.request(method, URLString: URLString, parameters: parameters, encoding: encoding, heard: heard, progress: progress, succee: succee, failure: failure)
 }
 
 public func download(
@@ -27,9 +29,9 @@ public func download(
     encoding: ParameteEncoding = .URL,
     heard: [String : String]? = nil,
     destination: Request.DownloadFileDestination,
-    progress: Request.TaskDelegate.ProgressClosure?,
-    succee: Request.TaskDelegate.SucceeClosure?,
-    failure: Request.TaskDelegate.FailureClosure?) -> Request {
+    progress: Request.ProgressClosure?,
+    succee: Request.SucceeClosure?,
+    failure: Request.FailureClosure?) -> Request {
         
         return Manager.sharedInstance.download(method, URLString: URLString, parameters: parameters, encoding: encoding, heard: heard, destination: destination, progress: progress, succee: succee, failure: failure)
 }
@@ -37,8 +39,8 @@ public func download(
 public func download(
     resumeData: NSData,
     destination: Request.DownloadFileDestination,
-    progress: Request.TaskDelegate.ProgressClosure?,
-    succee: Request.TaskDelegate.SucceeClosure?,
-    failure: Request.TaskDelegate.FailureClosure?) -> Request {
+    progress: Request.ProgressClosure?,
+    succee: Request.SucceeClosure?,
+    failure: Request.FailureClosure?) -> Request {
         return Manager.sharedInstance.download(resumeData, destination: destination, progress: progress, succee: succee, failure: failure)
 }
