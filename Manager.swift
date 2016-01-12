@@ -90,7 +90,7 @@ public class Manager {
         var task: NSURLSessionTask!
         dispatch_sync(queue) { task = self.session.dataTaskWithRequest(URLRequest) }
         let request = Request(session: session, task: task)
-        delegate[task] = request.delegate
+        delegate[request.delegate.task] = request.delegate
         if startRequestImmediate {
             request.resume()
         }

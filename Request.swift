@@ -127,8 +127,10 @@ public class Request {
     //MARK: -DataDelegate
     public class DataTaskDelegate: TaskDelegate {
         
+        private var totalDataReceived: Int64 = 0
+        
         func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveResponse response: NSURLResponse, completionHandler: (NSURLSessionResponseDisposition) -> Void) {
-            
+            completionHandler(.Allow)
         }
         
         func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didBecomeStreamTask streamTask: NSURLSessionStreamTask) {
@@ -141,10 +143,19 @@ public class Request {
         
         func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData) {
             
+            let expectedTotalDataLengeth = dataTask.response?.expectedContentLength ?? NSURLSessionTransferSizeUnknown
+            totalDataReceived += data.length
+            progress.totalUnitCount = expectedTotalDataLengeth
+            progress.completedUnitCount = totalDataReceived
+            if let progressClosure = progressClosure {
+                progressClosure(progress)
+            }
         }
         
         func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, willCacheResponse proposedResponse: NSCachedURLResponse, completionHandler: (NSCachedURLResponse?) -> Void) {
-            
+            if let succeeClosure = succeeClosure {
+                succeeClosure(dataTask, proposedResponse.data)
+            }
         }
     }
     
