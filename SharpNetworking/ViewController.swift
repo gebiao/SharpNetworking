@@ -15,7 +15,9 @@ let imageUrl = "http://farm3.staticflickr.com/2846/9823925914_78cd653ac9_b_d.jpg
 class ViewController: UIViewController {
     
     @IBOutlet weak var backImageView: UIImageView!
-    @IBOutlet weak var progressLabel: UILabel!
+    @IBOutlet weak var downloadProgress: UILabel!
+    @IBOutlet weak var uploadProgress: UILabel!
+    @IBOutlet weak var getDataProgress: UILabel!
     var resumeData: NSData?
     var request: Request!
     override func viewDidLoad() {
@@ -27,7 +29,7 @@ class ViewController: UIViewController {
         let destination = Request.suggestDownloadFileDesination(.DocumentDirectory, domains: .UserDomainMask)
         if request == nil {
             self.request = download(.GET, URLString: imageUrl, destination: destination, progress: { (progress) -> Void in
-                dispatch_async(dispatch_get_main_queue()) { self.progressLabel.text = progress.localizedDescription }
+                dispatch_async(dispatch_get_main_queue()) { self.downloadProgress.text = progress.localizedDescription }
                 }, succee: { (task, data) -> Void in
                     dispatch_async(dispatch_get_main_queue(), { [unowned self]() -> Void in
                         let image = UIImage.init(data: data)
@@ -40,6 +42,7 @@ class ViewController: UIViewController {
         }
     }
     
+    //Download Test
     @IBAction func suspendAction(sender: AnyObject) {
         request.suspend()
     }
@@ -55,7 +58,7 @@ class ViewController: UIViewController {
         if let resumeData = resumeData {
             let destination = Request.suggestDownloadFileDesination(.DocumentDirectory, domains: .UserDomainMask)
             download(resumeData, destination: destination, progress: { (progress) -> Void in
-                dispatch_async(dispatch_get_main_queue()) { self.progressLabel.text = progress.localizedDescription }
+                dispatch_async(dispatch_get_main_queue()) { self.downloadProgress.text = progress.localizedDescription }
                 }, succee: { (task, data) -> Void in
                     dispatch_async(dispatch_get_main_queue(), { [unowned self]() -> Void in
                         let image = UIImage.init(data: data)
@@ -69,5 +72,31 @@ class ViewController: UIViewController {
             request.resume()
         }
     }
+    
+    //Upload Test
+    @IBAction func startUploadAction(sender: AnyObject) {
+    }
+    
+    @IBAction func suspendUploadAction(sender: AnyObject) {
+    }
+    
+    @IBAction func cancelUploadAction(sender: AnyObject) {
+    }
+    
+    //GetData Test
+    @IBAction func startGetDataAction(sender: AnyObject) {
+    }
+    
+    @IBAction func suspendGetDataAction(sender: AnyObject) {
+    }
+    
+    @IBAction func cancelGetDataAction(sender: AnyObject) {
+    }
+    
+    
+    
+    
+    
+    
 }
 
