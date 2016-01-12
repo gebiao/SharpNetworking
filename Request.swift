@@ -41,6 +41,16 @@ public class Request {
         self.session = session
     }
     
+    public typealias SucceeClosure = (Request, NSData?)
+    public typealias FailureClosure = (Request, NSError)
+    public typealias ProgressClosure = (Request, NSProgress)
+    
+    //Succee
+    public var succeeClosure: SucceeClosure?
+    //Failure
+    public var failureClosure: FailureClosure?
+    //Progress download and upload
+    public var progressClosure: ProgressClosure?
     
     public func resume() {
         print("task: \(task)")
@@ -65,19 +75,19 @@ public class Request {
     
     public class TaskDelegate: NSObject {
         /// session task
-        var task: NSURLSessionTask
+        public var task: NSURLSessionTask
         
-        var response: NSHTTPURLResponse? { return task.response as? NSHTTPURLResponse}
+        public var response: NSHTTPURLResponse? { return task.response as? NSHTTPURLResponse}
         
         /// request progress
-        let progress: NSProgress
+        public let progress: NSProgress
         
         
         /// requst return data
-        var data: NSData? { return nil }
+        public var data: NSData? { return nil }
         
         /// error message
-        var error: NSError?
+        public var error: NSError?
         
         init (task: NSURLSessionTask) {
             self.task = task

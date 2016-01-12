@@ -104,10 +104,13 @@ extension Request {
                     let data = NSData.init(contentsOfURL: destinationToURL)
                     downloadDataCompleted(session, downloadTask, destinationToURL, data)
                 }
+                
+                if
             }
         }
         
         func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
+            
             
             progress.totalUnitCount = totalBytesExpectedToWrite
             progress.completedUnitCount = bytesWritten
