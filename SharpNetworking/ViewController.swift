@@ -31,6 +31,7 @@ class ViewController: UIViewController {
     @IBAction func startAction(sender: AnyObject) {
         let destination = Request.suggestDownloadFileDesination(.DocumentDirectory, domains: .UserDomainMask)
         if downloadRequest == nil {
+            downloadProgress.text = ""
             self.downloadRequest = download(.GET, URLString: imageUrl, destination: destination, progress: { (progress) -> Void in
                 dispatch_async(dispatch_get_main_queue()) { self.downloadProgress.text = progress.localizedDescription }
                 }, succee: { (task, data) -> Void in
@@ -93,21 +94,23 @@ class ViewController: UIViewController {
         let parametes = ["province" : "北京", "city" : "北京", "district" : "朝阳区"]
         let getUrl = "http://tqapi.mobile.360.cn/yingjian/weather/city"
         //        let getUrl = "https://httpbin.org/get"
-        let posturl = "https://httpbin.org/post"
-        let putUrl = "https://httpbin.org/put"
-        let deleteUrl = "https://httpbin.org/delete"
+        //        let posturl = "https://httpbin.org/post"
+        //        let putUrl = "https://httpbin.org/put"
+        //        let deleteUrl = "https://httpbin.org/delete"
         
-        getDataRequest(.GET, URLString: getUrl, parameters: parametes, encoding: .URL, heard: nil, progress: { (progress) -> Void in
+        if let _ = dataRequest { return }
+        getDataProgress.text = ""
+        dataRequest = getDataRequest(.GET, URLString: getUrl, parameters: parametes, encoding: .URL, heard: nil, progress: { (progress) -> Void in
             dispatch_async(dispatch_get_main_queue()) { self.getDataProgress.text = progress.localizedDescription }
             }, succee: { (task, data) -> Void in
-                dispatch_async(dispatch_get_main_queue(), { [unowned self]() -> Void in
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     do {
                         let json = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions())
                         print("json = \(json)")
                     } catch {
                         
                     }
-                    })
+                })
                 
             }) { (task, error) -> Void in
                 print("error : \(error)")
