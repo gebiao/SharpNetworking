@@ -118,6 +118,58 @@ public class Manager {
             
         }
         
+        //MAKE: -SessionTaskDelegate
+        public func URLSession(session: NSURLSession, task: NSURLSessionTask, willPerformHTTPRedirection response: NSHTTPURLResponse, newRequest request: NSURLRequest, completionHandler: (NSURLRequest?) -> Void) {
+            
+        }
+        
+        public func URLSession(session: NSURLSession, task: NSURLSessionTask, didReceiveChallenge challenge: NSURLAuthenticationChallenge, completionHandler: (NSURLSessionAuthChallengeDisposition, NSURLCredential?) -> Void) {
+            
+        }
+        
+        public func URLSession(session: NSURLSession, task: NSURLSessionTask, needNewBodyStream completionHandler: (NSInputStream?) -> Void) {
+            
+        }
+        
+        public func URLSession(session: NSURLSession, task: NSURLSessionTask, didSendBodyData bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64) {
+            
+        }
+        
+        public func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
+            
+        }
+        
+        //MARK: -SessionDataDelegate
+        public func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveResponse response: NSURLResponse, completionHandler: (NSURLSessionResponseDisposition) -> Void) {
+            if let dataTaskDelegate = self[dataTask] as? Request.DataTaskDelegate {
+                dataTaskDelegate.URLSession(session, dataTask: dataTask, didReceiveResponse: response, completionHandler: completionHandler)
+            }
+        }
+        
+        public func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didBecomeStreamTask streamTask: NSURLSessionStreamTask) {
+            if let dataTaskDelegate = self[dataTask] as? Request.DataTaskDelegate {
+                dataTaskDelegate.URLSession(session, dataTask: dataTask, didBecomeStreamTask: streamTask)
+            }
+        }
+        
+        public func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didBecomeDownloadTask downloadTask: NSURLSessionDownloadTask) {
+            if let dataTaskDelegate = self[dataTask] as? Request.DataTaskDelegate {
+                dataTaskDelegate.URLSession(session, dataTask: dataTask, didBecomeDownloadTask: downloadTask)
+            }
+        }
+        
+        public func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData) {
+            if let dataTaskDelegate = self[dataTask] as? Request.DataTaskDelegate {
+                dataTaskDelegate.URLSession(session, dataTask: dataTask, didReceiveData: data)
+            }
+        }
+        
+        public func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, willCacheResponse proposedResponse: NSCachedURLResponse, completionHandler: (NSCachedURLResponse?) -> Void) {
+            if let dataTaskDelegate = self[dataTask] as? Request.DataTaskDelegate {
+                dataTaskDelegate.URLSession(session, dataTask: dataTask, willCacheResponse: proposedResponse, completionHandler: completionHandler)
+            }
+        }
+        
         //MARK: -DownloadDelegate
         var downloadTaskDidWrited: ((NSURLSession, NSURLSessionDownloadTask, Int64, Int64, Int64) -> Void)?
         var downloadResumeTaskFileOffset: ((NSURLSession, NSURLSessionDownloadTask, Int64, Int64) -> Void)?
@@ -149,45 +201,6 @@ public class Manager {
                 }
             }
         }
-        
-        //MARK: -SessionTaskDelegate
-        public func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveResponse response: NSURLResponse, completionHandler: (NSURLSessionResponseDisposition) -> Void) {
-            
-        }
-        
-        public func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didBecomeDownloadTask downloadTask: NSURLSessionDownloadTask) {
-            
-        }
-        
-        public func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData) {
-            
-        }
-        
-        public func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, willCacheResponse proposedResponse: NSCachedURLResponse, completionHandler: (NSCachedURLResponse?) -> Void) {
-            
-        }
-        
-        //MAKE: -SessionTaskDelegate
-        public func URLSession(session: NSURLSession, task: NSURLSessionTask, willPerformHTTPRedirection response: NSHTTPURLResponse, newRequest request: NSURLRequest, completionHandler: (NSURLRequest?) -> Void) {
-            
-        }
-        
-        public func URLSession(session: NSURLSession, task: NSURLSessionTask, didReceiveChallenge challenge: NSURLAuthenticationChallenge, completionHandler: (NSURLSessionAuthChallengeDisposition, NSURLCredential?) -> Void) {
-            
-        }
-        
-        public func URLSession(session: NSURLSession, task: NSURLSessionTask, needNewBodyStream completionHandler: (NSInputStream?) -> Void) {
-            
-        }
-        
-        public func URLSession(session: NSURLSession, task: NSURLSessionTask, didSendBodyData bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64) {
-            
-        }
-        
-        public func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
-            
-        }
-        
     }
     
 }
