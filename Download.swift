@@ -50,17 +50,27 @@ extension Manager {
         var succee: Request.TaskDelegate.SucceeClosure? = nil,
         var failure: Request.TaskDelegate.FailureClosure? = nil) -> Request {
             let mutableRequest = NSMutableURLRequest(URL: NSURL.init(string: URLString)!)
-            let request = request(encoding.encoding(mutableRequest, parametes: parameters).0, destination: destination)
-            
-            return request
+            let requestInstance = request(encoding.encoding(mutableRequest, parametes: parameters).0, destination: destination)
+            progress = requestInstance.delegate.progressClosure
+            succee = requestInstance.delegate.succeeClosure
+            failure = requestInstance.delegate.failureClosure
+            return requestInstance
     }
     
     func request(URLRequst: NSMutableURLRequest, destination: Request.DownloadFileDestination) -> Request {
         return download(.Request(URLRequst), destination: destination)
     }
     
-    public func download(resumeData: NSData, destination: Request.DownloadFileDestination) -> Request {
-        return download(.ResumeData(resumeData), destination: destination)
+    public func download(
+        resumeData: NSData, destination: Request.DownloadFileDestination,
+        var progress: Request.TaskDelegate.ProgressClosure? = nil,
+        var succee: Request.TaskDelegate.SucceeClosure? = nil,
+        var failure: Request.TaskDelegate.FailureClosure? = nil) -> Request {
+            let requestInstance = download(.ResumeData(resumeData), destination: destination)
+            progress = requestInstance.delegate.progressClosure
+            succee = requestInstance.delegate.succeeClosure
+            failure = requestInstance.delegate.failureClosure
+            return requestInstance
     }
     
 }

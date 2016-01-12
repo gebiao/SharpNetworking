@@ -31,7 +31,7 @@ public func download(
     succee: Request.TaskDelegate.SucceeClosure?,
     failure: Request.TaskDelegate.FailureClosure?) -> Request {
         
-        return Manager.sharedInstance.download(method, URLString: URLString, heard: heard, destination: destination)
+        return Manager.sharedInstance.download(method, URLString: URLString, parameters: parameters, encoding: encoding, heard: heard, destination: destination, progress: progress, succee: succee, failure: failure)
 }
 
 public func download(
@@ -40,6 +40,5 @@ public func download(
     progress: Request.TaskDelegate.ProgressClosure?,
     succee: Request.TaskDelegate.SucceeClosure?,
     failure: Request.TaskDelegate.FailureClosure?) -> Request {
-        
-        return Manager.sharedInstance.download(resumeData, destination: destination)
+        return Manager.sharedInstance.download(resumeData, destination: destination, progress: progress, succee: succee, failure: failure)
 }
