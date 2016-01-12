@@ -46,14 +46,14 @@ extension Manager {
         encoding: ParameteEncoding = .URL,
         heard: [String : String]?,
         destination: Request.DownloadFileDestination,
-        var progress: Request.TaskDelegate.ProgressClosure? = nil,
-        var succee: Request.TaskDelegate.SucceeClosure? = nil,
-        var failure: Request.TaskDelegate.FailureClosure? = nil) -> Request {
+        progress: Request.TaskDelegate.ProgressClosure? = nil,
+        succee: Request.TaskDelegate.SucceeClosure? = nil,
+        failure: Request.TaskDelegate.FailureClosure? = nil) -> Request {
             let mutableRequest = NSMutableURLRequest(URL: NSURL.init(string: URLString)!)
             let requestInstance = request(encoding.encoding(mutableRequest, parametes: parameters).0, destination: destination)
-            progress = requestInstance.delegate.progressClosure
-            succee = requestInstance.delegate.succeeClosure
-            failure = requestInstance.delegate.failureClosure
+            requestInstance.delegate.progressClosure = progress
+            requestInstance.delegate.succeeClosure = succee
+            requestInstance.delegate.failureClosure = failure
             return requestInstance
     }
     
@@ -63,13 +63,13 @@ extension Manager {
     
     public func download(
         resumeData: NSData, destination: Request.DownloadFileDestination,
-        var progress: Request.TaskDelegate.ProgressClosure? = nil,
-        var succee: Request.TaskDelegate.SucceeClosure? = nil,
-        var failure: Request.TaskDelegate.FailureClosure? = nil) -> Request {
+        progress: Request.TaskDelegate.ProgressClosure? = nil,
+        succee: Request.TaskDelegate.SucceeClosure? = nil,
+        failure: Request.TaskDelegate.FailureClosure? = nil) -> Request {
             let requestInstance = download(.ResumeData(resumeData), destination: destination)
-            progress = requestInstance.delegate.progressClosure
-            succee = requestInstance.delegate.succeeClosure
-            failure = requestInstance.delegate.failureClosure
+            requestInstance.delegate.progressClosure = progress
+            requestInstance.delegate.succeeClosure = succee
+            requestInstance.delegate.failureClosure = failure
             return requestInstance
     }
     
@@ -97,6 +97,7 @@ extension Request {
         
         var downloadTask: NSURLSessionDownloadTask? { return task as? NSURLSessionDownloadTask }
         var resumeData: NSData?
+        let downloadProgress: NSProgress = NSProgress()
         
         override var data: NSData? { return resumeData }
         
@@ -127,23 +128,26 @@ extension Request {
         }
         
         func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
-            progress.totalUnitCount = totalBytesExpectedToWrite
-            progress.completedUnitCount = bytesWritten
-            print("download progress: \(progress.localizedDescription)")
+            downloadProgress.totalUnitCount = totalBytesExpectedToWrite
+            downloadProgress.completedUnitCount = totalBytesWritten
+            print("download progress: \(self.downloadProgress.localizedDescription), \(downloadProgress)")
             if let downloadTaskDidWrited = downloadTaskDidWrited {
                 downloadTaskDidWrited(session, downloadTask, bytesWritten, totalBytesWritten, totalBytesExpectedToWrite)
             }
             
             if let progressClosure = progressClosure {
-                progressClosure(progress)
+                progressClosure(self.downloadProgress)
             }
         }
         
         func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didResumeAtOffset fileOffset: Int64, expectedTotalBytes: Int64) {
-            self.progress.totalUnitCount = expectedTotalBytes
-            self.progress.completedUnitCount = fileOffset
+            downloadProgress.totalUnitCount = expectedTotalBytes
+            downloadProgress.completedUnitCount = fileOffset
             if let downloadResumeTaskFileOffset = downloadResumeTaskFileOffset {
                 downloadResumeTaskFileOffset(session, downloadTask, fileOffset, expectedTotalBytes)
+            }
+            if let progressClosure = progressClosure {
+                progressClosure(self.downloadProgress)
             }
         }
         

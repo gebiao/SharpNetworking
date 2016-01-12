@@ -16,7 +16,6 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var backImageView: UIImageView!
     @IBOutlet weak var progressLabel: UILabel!
-    var progress: NSProgress = NSProgress(totalUnitCount: 0)
     var resumeData: NSData?
     var request: Request!
     override func viewDidLoad() {
@@ -27,30 +26,18 @@ class ViewController: UIViewController {
     @IBAction func startAction(sender: AnyObject) {
         let destination = Request.suggestDownloadFileDesination(.DocumentDirectory, domains: .UserDomainMask)
         if request == nil {
-            self.request = download(.GET, URLString: videoUrl, destination: destination, progress: { (progress) -> Void in
-                
+            self.request = download(.GET, URLString: imageUrl, destination: destination, progress: { (progress) -> Void in
+                dispatch_async(dispatch_get_main_queue()) { self.progressLabel.text = progress.localizedDescription }
                 }, succee: { (task, data) -> Void in
-                    
+                    dispatch_async(dispatch_get_main_queue(), { [unowned self]() -> Void in
+                        let image = UIImage.init(data: data)
+                        self.backImageView.image = image
+                        self.backImageView.setNeedsLayout()
+                        })
                 }, failure: { (task, error) -> Void in
-                    
+                    print("error : \(error)")
             })
         }
-        Manager.sharedInstance.delegate.downloadTaskDidWrited = { [unowned self](session, downloadTask, didWriteData, totalBytesWritten, totalBytesExpectedToWrite) in
-            self.progress.totalUnitCount = totalBytesExpectedToWrite
-            self.progress.completedUnitCount = totalBytesWritten
-            dispatch_async(dispatch_get_main_queue()) { self.progressLabel.text = self.progress.localizedDescription }
-        }
-        
-        Manager.sharedInstance.delegate.downloadDataCompleted = { [unowned self](session, downloadTask, dataFileUrl, data) in
-            dispatch_async(dispatch_get_main_queue(), { [unowned self]() -> Void in
-                let image = UIImage.init(data: data!)
-                self.backImageView.image = image
-                self.backImageView.setNeedsLayout()
-                })
-        }
-        
-        
-        
     }
     
     @IBAction func suspendAction(sender: AnyObject) {
@@ -68,11 +55,15 @@ class ViewController: UIViewController {
         if let resumeData = resumeData {
             let destination = Request.suggestDownloadFileDesination(.DocumentDirectory, domains: .UserDomainMask)
             download(resumeData, destination: destination, progress: { (progress) -> Void in
-                
+                dispatch_async(dispatch_get_main_queue()) { self.progressLabel.text = progress.localizedDescription }
                 }, succee: { (task, data) -> Void in
-                    
+                    dispatch_async(dispatch_get_main_queue(), { [unowned self]() -> Void in
+                        let image = UIImage.init(data: data)
+                        self.backImageView.image = image
+                        self.backImageView.setNeedsLayout()
+                        })
                 }, failure: { (task, error) -> Void in
-                    
+                    print("error : \(error)")
             })
         } else {
             request.resume()
