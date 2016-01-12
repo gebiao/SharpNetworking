@@ -45,9 +45,14 @@ extension Manager {
         parameters: [String : AnyObject]? = nil,
         encoding: ParameteEncoding = .URL,
         heard: [String : String]?,
-        destination: Request.DownloadFileDestination) -> Request {
+        destination: Request.DownloadFileDestination,
+        var progress: Request.TaskDelegate.ProgressClosure? = nil,
+        var succee: Request.TaskDelegate.SucceeClosure? = nil,
+        var failure: Request.TaskDelegate.FailureClosure? = nil) -> Request {
             let mutableRequest = NSMutableURLRequest(URL: NSURL.init(string: URLString)!)
-            return request(encoding.encoding(mutableRequest, parametes: parameters).0, destination: destination)
+            let request = request(encoding.encoding(mutableRequest, parametes: parameters).0, destination: destination)
+            
+            return request
     }
     
     func request(URLRequst: NSMutableURLRequest, destination: Request.DownloadFileDestination) -> Request {
@@ -105,18 +110,22 @@ extension Request {
                     downloadDataCompleted(session, downloadTask, destinationToURL, data)
                 }
                 
-                if
+                if let succeeClosure = succeeClosure {
+                    succeeClosure(downloadTask, NSData.init(contentsOfURL: destinationToURL)!)
+                }
             }
         }
         
         func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
-            
-            
             progress.totalUnitCount = totalBytesExpectedToWrite
             progress.completedUnitCount = bytesWritten
             print("download progress: \(progress.localizedDescription)")
             if let downloadTaskDidWrited = downloadTaskDidWrited {
                 downloadTaskDidWrited(session, downloadTask, bytesWritten, totalBytesWritten, totalBytesExpectedToWrite)
+            }
+            
+            if let progressClosure = progressClosure {
+                progressClosure(progress)
             }
         }
         

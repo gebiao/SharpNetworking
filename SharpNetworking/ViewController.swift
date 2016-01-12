@@ -27,7 +27,13 @@ class ViewController: UIViewController {
     @IBAction func startAction(sender: AnyObject) {
         let destination = Request.suggestDownloadFileDesination(.DocumentDirectory, domains: .UserDomainMask)
         if request == nil {
-            self.request = download(.GET, URLString: imageUrl, destination: destination)
+            self.request = download(.GET, URLString: videoUrl, destination: destination, progress: { (progress) -> Void in
+                
+                }, succee: { (task, data) -> Void in
+                    
+                }, failure: { (task, error) -> Void in
+                    
+            })
         }
         Manager.sharedInstance.delegate.downloadTaskDidWrited = { [unowned self](session, downloadTask, didWriteData, totalBytesWritten, totalBytesExpectedToWrite) in
             self.progress.totalUnitCount = totalBytesExpectedToWrite
@@ -61,7 +67,13 @@ class ViewController: UIViewController {
     @IBAction func goOnAction(sender: AnyObject) {
         if let resumeData = resumeData {
             let destination = Request.suggestDownloadFileDesination(.DocumentDirectory, domains: .UserDomainMask)
-            download(resumeData, destination: destination)
+            download(resumeData, destination: destination, progress: { (progress) -> Void in
+                
+                }, succee: { (task, data) -> Void in
+                    
+                }, failure: { (task, error) -> Void in
+                    
+            })
         } else {
             request.resume()
         }

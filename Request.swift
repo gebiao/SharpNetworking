@@ -24,7 +24,7 @@ public class Request {
     /// The progress is requst progress
     public var progress: NSProgress? { return delegate.progress }
     
-    //MARK: // LifeCycle
+    //MARK: -LifeCycle
     init (session: NSURLSession, task: NSURLSessionTask) {
         
         switch task {
@@ -40,17 +40,6 @@ public class Request {
         
         self.session = session
     }
-    
-    public typealias SucceeClosure = (Request, NSData?)
-    public typealias FailureClosure = (Request, NSError)
-    public typealias ProgressClosure = (Request, NSProgress)
-    
-    //Succee
-    public var succeeClosure: SucceeClosure?
-    //Failure
-    public var failureClosure: FailureClosure?
-    //Progress download and upload
-    public var progressClosure: ProgressClosure?
     
     public func resume() {
         print("task: \(task)")
@@ -89,6 +78,18 @@ public class Request {
         /// error message
         public var error: NSError?
         
+        public typealias SucceeClosure = (NSURLSessionTask, NSData) -> Void
+        public typealias FailureClosure = (NSURLSessionTask, NSError) -> Void
+        public typealias ProgressClosure = (NSProgress) -> Void
+        
+        //Succee
+        public var succeeClosure: SucceeClosure?
+        //Failure
+        public var failureClosure: FailureClosure?
+        //Progress download and upload
+        public var progressClosure: ProgressClosure?
+        
+        
         init (task: NSURLSessionTask) {
             self.task = task
             self.progress = NSProgress(totalUnitCount: 0)
@@ -115,8 +116,12 @@ public class Request {
         func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
             self.task = task
             self.error = error
+            if let
+                failureClosure = failureClosure,
+                error = error {
+                    failureClosure(task, error)
+            }
         }
-        
     }
     
     //MARK: -DataDelegate

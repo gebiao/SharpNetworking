@@ -27,27 +27,19 @@ public func download(
     encoding: ParameteEncoding = .URL,
     heard: [String : String]? = nil,
     destination: Request.DownloadFileDestination,
-    var progress: Request.ProgressClosure?,
-    var succee: Request.SucceeClosure?,
-    var failure: Request.FailureClosure?) -> Request {
-        let request = Manager.sharedInstance.download(method, URLString: URLString, heard: heard, destination: destination)
-        progress = request.progressClosure
-        succee = request.succeeClosure
-        failure = request.failureClosure
+    progress: Request.TaskDelegate.ProgressClosure?,
+    succee: Request.TaskDelegate.SucceeClosure?,
+    failure: Request.TaskDelegate.FailureClosure?) -> Request {
         
-        return request
-        
+        return Manager.sharedInstance.download(method, URLString: URLString, heard: heard, destination: destination)
 }
 
 public func download(
     resumeData: NSData,
     destination: Request.DownloadFileDestination,
-    var progress: Request.ProgressClosure?,
-    var succee: Request.SucceeClosure?,
-    var failure: Request.FailureClosure?) -> Request {
-        let request = Manager.sharedInstance.download(resumeData, destination: destination)
-        progress = request.progressClosure
-        succee = request.succeeClosure
-        failure = request.failureClosure
-        return request
+    progress: Request.TaskDelegate.ProgressClosure?,
+    succee: Request.TaskDelegate.SucceeClosure?,
+    failure: Request.TaskDelegate.FailureClosure?) -> Request {
+        
+        return Manager.sharedInstance.download(resumeData, destination: destination)
 }
