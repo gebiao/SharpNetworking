@@ -66,15 +66,15 @@
                                     <action selector="cancelAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZvK-Hi-4Y3"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="下载测试" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VeK-TL-bP6">
-                                <rect key="frame" x="0.0" y="279" width="83" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Download测试" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VeK-TL-bP6">
+                                <rect key="frame" x="-10" y="279" width="93" height="21"/>
                                 <color key="backgroundColor" red="0.6849480979" green="0.70848335409999996" blue="0.80997474749999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="上传测试" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qEg-ub-Lhb">
-                                <rect key="frame" x="0.0" y="351" width="83" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Upload测试" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qEg-ub-Lhb">
+                                <rect key="frame" x="0.0" y="351" width="83" height="20"/>
                                 <color key="backgroundColor" red="0.6849480979" green="0.70848335409999996" blue="0.80997474749999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="0v9-dR-fdG"/>
@@ -109,8 +109,7 @@
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="suspendAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BbW-HP-1Cq"/>
-                                    <action selector="suspendUploadAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Cl4-0V-PDt"/>
+                                    <action selector="suspendUploadAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="izd-nO-ffA"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GWg-PX-8QD">
@@ -127,7 +126,7 @@
                                     <action selector="cancelUploadAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ove-vx-kq1"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="其他测试" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v08-hu-dYm">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GetData测试" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v08-hu-dYm">
                                 <rect key="frame" x="0.0" y="434" width="83" height="21"/>
                                 <color key="backgroundColor" red="0.6849480979" green="0.70848335409999996" blue="0.80997474749999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -149,8 +148,7 @@
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="startAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DOu-s0-tBc"/>
-                                    <action selector="startGetDataAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ess-IK-pPb"/>
+                                    <action selector="startGetDataAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nhu-fA-Ufa"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GRo-e3-7dO">
@@ -164,23 +162,7 @@
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="suspendAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fph-6C-3al"/>
-                                    <action selector="suspendGetDataAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="srv-nm-NHj"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e1c-AC-ER9">
-                                <rect key="frame" x="292" y="469" width="70" height="30"/>
-                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="70" id="FaS-E2-NQf"/>
-                                    <constraint firstAttribute="height" constant="30" id="r6p-Ra-PiT"/>
-                                </constraints>
-                                <state key="normal" title="取消">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="cancelAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XMS-7f-X6v"/>
-                                    <action selector="cancelGetDataAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AWR-tc-dz4"/>
+                                    <action selector="suspendGetDataAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Uew-u6-dtq"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y6p-h8-bFm">
@@ -216,6 +198,20 @@
                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e1c-AC-ER9">
+                                <rect key="frame" x="292" y="469" width="70" height="30"/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="70" id="FaS-E2-NQf"/>
+                                    <constraint firstAttribute="height" constant="30" id="r6p-Ra-PiT"/>
+                                </constraints>
+                                <state key="normal" title="取消">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="cancelGetDataAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pge-Pc-KH4"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>

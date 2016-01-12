@@ -19,7 +19,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var uploadProgress: UILabel!
     @IBOutlet weak var getDataProgress: UILabel!
     var resumeData: NSData?
-    var request: Request!
+    var downloadRequest: Request!
+    var dataRequest: Request!
+    var uploadRequest: Request!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -27,8 +30,8 @@ class ViewController: UIViewController {
     }
     @IBAction func startAction(sender: AnyObject) {
         let destination = Request.suggestDownloadFileDesination(.DocumentDirectory, domains: .UserDomainMask)
-        if request == nil {
-            self.request = download(.GET, URLString: imageUrl, destination: destination, progress: { (progress) -> Void in
+        if downloadRequest == nil {
+            self.downloadRequest = download(.GET, URLString: imageUrl, destination: destination, progress: { (progress) -> Void in
                 dispatch_async(dispatch_get_main_queue()) { self.downloadProgress.text = progress.localizedDescription }
                 }, succee: { (task, data) -> Void in
                     dispatch_async(dispatch_get_main_queue(), { [unowned self]() -> Void in
@@ -44,12 +47,12 @@ class ViewController: UIViewController {
     
     //Download Test
     @IBAction func suspendAction(sender: AnyObject) {
-        request.suspend()
+        downloadRequest.suspend()
     }
     
     @IBAction func cancelAction(sender: AnyObject) {
-        request.cancel()
-        if let delegate = request.delegate as? Request.DownloadTaskDelegate {
+        downloadRequest.cancel()
+        if let delegate = downloadRequest.delegate as? Request.DownloadTaskDelegate {
             self.resumeData = delegate.resumeData
         }
     }
@@ -69,12 +72,14 @@ class ViewController: UIViewController {
                     print("error : \(error)")
             })
         } else {
-            request.resume()
+            downloadRequest.resume()
         }
     }
     
     //Upload Test
     @IBAction func startUploadAction(sender: AnyObject) {
+        
+        
     }
     
     @IBAction func suspendUploadAction(sender: AnyObject) {
@@ -85,12 +90,27 @@ class ViewController: UIViewController {
     
     //GetData Test
     @IBAction func startGetDataAction(sender: AnyObject) {
+        //        let parametes = ["province" : "北京", "city" : "北京", "district" : "朝阳区"]
+        let getUrl = "https://httpbin.org/get"
+        let posturl = "https://httpbin.org/post"
+        let putUrl = "https://httpbin.org/put"
+        let deleteUrl = "https://httpbin.org/delete"
+        
+        dataRequest = getDataRequest(.GET, URLString: getUrl, progress: { (progress) -> Void in
+            
+            }, succee: { (task, data) -> Void in
+                
+            }) { (task, error) -> Void in
+                
+        }
     }
     
     @IBAction func suspendGetDataAction(sender: AnyObject) {
+        dataRequest.suspend()
     }
     
     @IBAction func cancelGetDataAction(sender: AnyObject) {
+        dataRequest.cancel()
     }
     
     

@@ -89,7 +89,13 @@ public class Manager {
     func request(URLRequest: NSMutableURLRequest) -> Request {
         var task: NSURLSessionTask!
         dispatch_sync(queue) { task = self.session.dataTaskWithRequest(URLRequest) }
-        return Request(session: session, task: task)
+        let request = Request(session: session, task: task)
+        delegate[task] = request.delegate
+        if startRequestImmediate {
+            request.resume()
+        }
+        
+        return request
     }
     
     

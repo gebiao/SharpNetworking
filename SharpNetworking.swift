@@ -9,7 +9,7 @@
 import Foundation
 
 
-public func request(
+public func getDataRequest(
     method: Method,
     URLString: String,
     parameters: [String : AnyObject]? = nil,
