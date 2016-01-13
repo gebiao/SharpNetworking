@@ -28,10 +28,10 @@ public class Request {
     init (session: NSURLSession, task: NSURLSessionTask) {
         
         switch task {
-        case is NSURLSessionDataTask:
-            self.delegate = DataTaskDelegate(task: task)
         case is NSURLSessionUploadTask:
             self.delegate = UploadTaskDelegate(task: task)
+        case is NSURLSessionDataTask:
+            self.delegate = DataTaskDelegate(task: task)
         case is NSURLSessionDownloadTask:
             self.delegate = DownloadTaskDelegate(task: task)
         default:
