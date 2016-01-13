@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		672B27D61C463F9C002BDC69 /* beautiful.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 672B27D51C463F9C002BDC69 /* beautiful.jpg */; };
+		672B27D81C464841002BDC69 /* unicorn.png in Resources */ = {isa = PBXBuildFile; fileRef = 672B27D71C464841002BDC69 /* unicorn.png */; };
 		673637041C3DF7EE007B3BC6 /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673637031C3DF7EE007B3BC6 /* Manager.swift */; };
 		673637061C3DF812007B3BC6 /* ParamentsEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673637051C3DF812007B3BC6 /* ParamentsEncoding.swift */; };
 		673637081C3DF81B007B3BC6 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673637071C3DF81B007B3BC6 /* Request.swift */; };
@@ -26,6 +27,7 @@
 
 /* Begin PBXFileReference section */
 		672B27D51C463F9C002BDC69 /* beautiful.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = beautiful.jpg; sourceTree = "<group>"; };
+		672B27D71C464841002BDC69 /* unicorn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unicorn.png; sourceTree = "<group>"; };
 		673637031C3DF7EE007B3BC6 /* Manager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Manager.swift; sourceTree = SOURCE_ROOT; };
 		673637051C3DF812007B3BC6 /* ParamentsEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParamentsEncoding.swift; sourceTree = SOURCE_ROOT; };
 		673637071C3DF81B007B3BC6 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = SOURCE_ROOT; };
@@ -67,6 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				672B27D51C463F9C002BDC69 /* beautiful.jpg */,
+				672B27D71C464841002BDC69 /* unicorn.png */,
 			);
 			name = images;
 			sourceTree = "<group>";
@@ -195,6 +198,7 @@
 				67E872991C3CEEB2006E1D0D /* LaunchScreen.storyboard in Resources */,
 				672B27D61C463F9C002BDC69 /* beautiful.jpg in Resources */,
 				67E872961C3CEEB2006E1D0D /* Assets.xcassets in Resources */,
+				672B27D81C464841002BDC69 /* unicorn.png in Resources */,
 				67E872941C3CEEB2006E1D0D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

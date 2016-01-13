@@ -80,34 +80,47 @@ class ViewController: UIViewController {
     //Upload Test
     @IBAction func startUploadAction(sender: AnyObject) {
         let url = "https://httpbin.org/"
-        let fileUrl = NSBundle.mainBundle().pathForResource("beautiful", ofType: "jpg")
-        let data = NSData.init(contentsOfURL: NSURL.init(fileURLWithPath: fileUrl!))
-        guard let data_0 = data else { return }
+        let fileUrl = NSBundle.mainBundle().pathForResource("unicorn", ofType: "png")
+        //        let data = NSData.init(contentsOfURL: NSURL.init(fileURLWithPath: fileUrl!))
+        //        guard let data_0 = data else { return }
         
-        upload(.POST, URLString: url, data: data_0, progress: { (progress) -> Void in
+        //        uploadRequest = upload(.POST, URLString: url, data: data_0, progress: { (progress) -> Void in
+        //            dispatch_async(dispatch_get_main_queue()) { self.uploadProgress.text = progress.localizedDescription }
+        //            }, success: { (task, data) -> Void in
+        //                print("upload success")
+        //            }) { (task, error) -> Void in
+        //                print("error : \(error)")
+        //        }
+        
+        uploadRequest = upload(.POST, URLString: url, fileURL: NSURL.init(fileURLWithPath: fileUrl!), progress: { (progress) -> Void in
             dispatch_async(dispatch_get_main_queue()) { self.uploadProgress.text = progress.localizedDescription }
-            }, success: { (task, data) -> Void in
-                print("upload success")
-            }) { (task, error) -> Void in
+            }, success: nil, failure: { (task, error) -> Void in
                 print("error : \(error)")
-        }
+        })
+        
+        
+        
     }
     
     @IBAction func suspendUploadAction(sender: AnyObject) {
-        
+        uploadRequest.suspend()
     }
     
     @IBAction func cancelUploadAction(sender: AnyObject) {
+        uploadRequest.cancel()
     }
     
+    @IBAction func goOnuploadAction(sender: AnyObject) {
+        uploadRequest.resume()
+    }
     
     
     //GetData Test
     @IBAction func startGetDataAction(sender: AnyObject) {
-//        let parametes = ["province" : "北京", "city" : "北京", "district" : "朝阳区"]
-//        let getUrl = "http://tqapi.mobile.360.cn/yingjian/weather/city"
-                let getUrl = "https://httpbin.org/get"
-                let posturl = "https://httpbin.org/post"
+        //        let parametes = ["province" : "北京", "city" : "北京", "district" : "朝阳区"]
+        //        let getUrl = "http://tqapi.mobile.360.cn/yingjian/weather/city"
+        let getUrl = "https://httpbin.org/get"
+        let posturl = "https://httpbin.org/post"
         //        let putUrl = "https://httpbin.org/put"
         //        let deleteUrl = "https://httpbin.org/delete"
         
@@ -138,6 +151,9 @@ class ViewController: UIViewController {
         dataRequest.cancel()
     }
     
+    @IBAction func goOnGetDataAction(sender: AnyObject) {
+        dataRequest.resume()
+    }
     
     
     
