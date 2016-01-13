@@ -91,16 +91,16 @@ class ViewController: UIViewController {
     
     //GetData Test
     @IBAction func startGetDataAction(sender: AnyObject) {
-        let parametes = ["province" : "北京", "city" : "北京", "district" : "朝阳区"]
-        let getUrl = "http://tqapi.mobile.360.cn/yingjian/weather/city"
-        //        let getUrl = "https://httpbin.org/get"
-        //        let posturl = "https://httpbin.org/post"
+//        let parametes = ["province" : "北京", "city" : "北京", "district" : "朝阳区"]
+//        let getUrl = "http://tqapi.mobile.360.cn/yingjian/weather/city"
+                let getUrl = "https://httpbin.org/get"
+                let posturl = "https://httpbin.org/post"
         //        let putUrl = "https://httpbin.org/put"
         //        let deleteUrl = "https://httpbin.org/delete"
         
         if let _ = dataRequest { return }
         getDataProgress.text = ""
-        dataRequest = getDataRequest(.GET, URLString: getUrl, parameters: parametes, encoding: .URL, heard: nil, progress: { (progress) -> Void in
+        dataRequest = getDataRequest(.GET, URLString: getUrl, parameters: nil, encoding: .URL, heard: nil, progress: { (progress) -> Void in
             dispatch_async(dispatch_get_main_queue()) { self.getDataProgress.text = progress.localizedDescription }
             }, succee: { (task, data) -> Void in
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in

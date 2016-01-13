@@ -122,7 +122,13 @@ public class Manager {
         }
         
         public func URLSession(session: NSURLSession, didReceiveChallenge challenge: NSURLAuthenticationChallenge, completionHandler: (NSURLSessionAuthChallengeDisposition, NSURLCredential?) -> Void) {
+//            let authenticationMethod = challenge.protectionSpace.authenticationMethod
+//            completionHandler(.PerformDefaultHandling, NSURLCredential(forTrust: challenge.protectionSpace.serverTrust!))
             
+            let disposition: NSURLSessionAuthChallengeDisposition = .UseCredential
+            completionHandler(disposition,  NSURLCredential(forTrust: challenge.protectionSpace.serverTrust!))
+
+//            print("===\(authenticationMethod)")
         }
         
         public func URLSessionDidFinishEventsForBackgroundURLSession(session: NSURLSession) {
@@ -135,7 +141,7 @@ public class Manager {
         }
         
         public func URLSession(session: NSURLSession, task: NSURLSessionTask, didReceiveChallenge challenge: NSURLAuthenticationChallenge, completionHandler: (NSURLSessionAuthChallengeDisposition, NSURLCredential?) -> Void) {
-            
+
         }
         
         public func URLSession(session: NSURLSession, task: NSURLSessionTask, needNewBodyStream completionHandler: (NSInputStream?) -> Void) {
