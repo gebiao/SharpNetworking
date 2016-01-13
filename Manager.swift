@@ -68,23 +68,40 @@ public class Manager {
         self.session.invalidateAndCancel()
     }
     
-    public func request(method: Method, URLString: String, parameters: [String : AnyObject]? = nil, encoding: ParameteEncoding = .URL, heard: [String : String]? = nil, progress: Request.ProgressClosure?, succee: Request.SucceeClosure?, failure: Request.FailureClosure?) -> Request {
-        let request = URLRequest(method, URLString: URLString, parameters: parameters, heard: heard)
-        request.delegate.progressClosure = progress
-        request.delegate.succeeClosure = succee
-        request.delegate.failureClosure = failure
-        return request
-    }
-    
     func URLRequest(
         method: Method,
         URLString: String,
-        parameters: [String : AnyObject]?,
         encoding: ParameteEncoding = .URL,
-        heard: [String : String]?) -> Request {
+        heard: [String : String]?) -> NSMutableURLRequest {
             let mutableRequest = NSMutableURLRequest(URL: NSURL.init(string: URLString)!)
-            return request(encoding.encoding(mutableRequest, parametes: parameters).0)
+            mutableRequest.HTTPMethod = method.rawValue
+            
+            if let heard = heard {
+                for (key, value) in heard {
+                    mutableRequest.setValue(value, forKey: key)
+                }
+            }
+            
+            return mutableRequest
     }
+    
+    public func request(
+        method: Method,
+        URLString: String,
+        parameters: [String : AnyObject]? = nil,
+        encoding: ParameteEncoding = .URL,
+        heard: [String : String]? = nil,
+        progress: Request.ProgressClosure?,
+        success: Request.SuccessClosure?,
+        failure: Request.FailureClosure?) -> Request {
+            let mutableRequest = URLRequest(method, URLString: URLString, heard: heard)
+            let requestInstance = request(encoding.encoding(mutableRequest, parametes: parameters).0)
+            requestInstance.delegate.progressClosure = progress
+            requestInstance.delegate.successClosure = success
+            requestInstance.delegate.failureClosure = failure
+            return requestInstance
+    }
+    
     
     func request(URLRequest: NSMutableURLRequest) -> Request {
         var task: NSURLSessionTask!
@@ -122,13 +139,13 @@ public class Manager {
         }
         
         public func URLSession(session: NSURLSession, didReceiveChallenge challenge: NSURLAuthenticationChallenge, completionHandler: (NSURLSessionAuthChallengeDisposition, NSURLCredential?) -> Void) {
-//            let authenticationMethod = challenge.protectionSpace.authenticationMethod
-//            completionHandler(.PerformDefaultHandling, NSURLCredential(forTrust: challenge.protectionSpace.serverTrust!))
+            //            let authenticationMethod = challenge.protectionSpace.authenticationMethod
+            //            completionHandler(.PerformDefaultHandling, NSURLCredential(forTrust: challenge.protectionSpace.serverTrust!))
             
             let disposition: NSURLSessionAuthChallengeDisposition = .UseCredential
             completionHandler(disposition,  NSURLCredential(forTrust: challenge.protectionSpace.serverTrust!))
-
-//            print("===\(authenticationMethod)")
+            
+            //            print("===\(authenticationMethod)")
         }
         
         public func URLSessionDidFinishEventsForBackgroundURLSession(session: NSURLSession) {
@@ -141,7 +158,7 @@ public class Manager {
         }
         
         public func URLSession(session: NSURLSession, task: NSURLSessionTask, didReceiveChallenge challenge: NSURLAuthenticationChallenge, completionHandler: (NSURLSessionAuthChallengeDisposition, NSURLCredential?) -> Void) {
-
+            
         }
         
         public func URLSession(session: NSURLSession, task: NSURLSessionTask, needNewBodyStream completionHandler: (NSInputStream?) -> Void) {
@@ -149,7 +166,9 @@ public class Manager {
         }
         
         public func URLSession(session: NSURLSession, task: NSURLSessionTask, didSendBodyData bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64) {
-            
+            if let uploadTaskDelegate = self[task] as? Request.UploadTaskDelegate {
+                uploadTaskDelegate.URLSession(session, task: task, didSendBodyData: bytesSent, totalBytesSent: totalBytesSent, totalBytesExpectedToSend: totalBytesExpectedToSend)
+            }
         }
         
         public func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {

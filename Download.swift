@@ -47,12 +47,13 @@ extension Manager {
         heard: [String : String]?,
         destination: Request.DownloadFileDestination,
         progress: Request.ProgressClosure? = nil,
-        succee: Request.SucceeClosure? = nil,
+        success: Request.SuccessClosure? = nil,
         failure: Request.FailureClosure? = nil) -> Request {
             let mutableRequest = NSMutableURLRequest(URL: NSURL.init(string: URLString)!)
+            mutableRequest.HTTPMethod = method.rawValue
             let requestInstance = request(encoding.encoding(mutableRequest, parametes: parameters).0, destination: destination)
             requestInstance.delegate.progressClosure = progress
-            requestInstance.delegate.succeeClosure = succee
+            requestInstance.delegate.successClosure = success
             requestInstance.delegate.failureClosure = failure
             return requestInstance
     }
@@ -64,11 +65,11 @@ extension Manager {
     public func download(
         resumeData: NSData, destination: Request.DownloadFileDestination,
         progress: Request.ProgressClosure? = nil,
-        succee: Request.SucceeClosure? = nil,
+        success: Request.SuccessClosure? = nil,
         failure: Request.FailureClosure? = nil) -> Request {
             let requestInstance = download(.ResumeData(resumeData), destination: destination)
             requestInstance.delegate.progressClosure = progress
-            requestInstance.delegate.succeeClosure = succee
+            requestInstance.delegate.successClosure = success
             requestInstance.delegate.failureClosure = failure
             return requestInstance
     }
@@ -121,8 +122,8 @@ extension Request {
                     downloadDataCompleted(session, downloadTask, destinationToURL, data)
                 }
                 
-                if let succeeClosure = succeeClosure {
-                    succeeClosure(downloadTask, NSData.init(contentsOfURL: destinationToURL)!)
+                if let successClosure = successClosure {
+                    successClosure(downloadTask, NSData.init(contentsOfURL: destinationToURL)!)
                 }
             }
         }

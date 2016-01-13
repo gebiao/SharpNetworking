@@ -61,12 +61,12 @@ public class Request {
         }
     }
     
-    public typealias SucceeClosure = (NSURLSessionTask, NSData) -> Void
+    public typealias SuccessClosure = (NSURLSessionTask, NSData) -> Void
     public typealias FailureClosure = (NSURLSessionTask, NSError) -> Void
     public typealias ProgressClosure = (NSProgress) -> Void
     
     
-    public class TaskDelegate: NSObject {
+    public class TaskDelegate: NSObject, NSURLSessionTaskDelegate {
         /// session task
         public var task: NSURLSessionTask
         
@@ -82,8 +82,8 @@ public class Request {
         /// error message
         public var error: NSError?
         
-        //Succee
-        public var succeeClosure: SucceeClosure?
+        //success
+        public var successClosure: SuccessClosure?
         //Failure
         public var failureClosure: FailureClosure?
         //Progress download and upload
@@ -96,24 +96,19 @@ public class Request {
         }
         
         // MARK: -URLSessionTaskDelegate
-        func URLSession(session: NSURLSession, task: NSURLSessionTask, willPerformHTTPRedirection response: NSHTTPURLResponse, newRequest request: NSURLRequest, completionHandler: (NSURLRequest?) -> Void) {
+        public func URLSession(session: NSURLSession, task: NSURLSessionTask, willPerformHTTPRedirection response: NSHTTPURLResponse, newRequest request: NSURLRequest, completionHandler: (NSURLRequest?) -> Void) {
             
         }
         
-        func URLSession(session: NSURLSession, task: NSURLSessionTask, didReceiveChallenge challenge: NSURLAuthenticationChallenge, completionHandler: (NSURLSessionAuthChallengeDisposition, NSURLCredential?) -> Void) {
+        public func URLSession(session: NSURLSession, task: NSURLSessionTask, didReceiveChallenge challenge: NSURLAuthenticationChallenge, completionHandler: (NSURLSessionAuthChallengeDisposition, NSURLCredential?) -> Void) {
             
         }
         
-        func URLSession(session: NSURLSession, task: NSURLSessionTask, needNewBodyStream completionHandler: (NSInputStream?) -> Void) {
+        public func URLSession(session: NSURLSession, task: NSURLSessionTask, needNewBodyStream completionHandler: (NSInputStream?) -> Void) {
             
         }
-        
-        func URLSession(session: NSURLSession, task: NSURLSessionTask, didSendBodyData bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64) {
-            self.progress.totalUnitCount = totalBytesExpectedToSend
-            self.progress.completedUnitCount = totalBytesSent
-        }
-        
-        func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
+                
+        public func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
             self.task = task
             self.error = error
             if let
@@ -153,8 +148,8 @@ public class Request {
         }
         
         func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, willCacheResponse proposedResponse: NSCachedURLResponse, completionHandler: (NSCachedURLResponse?) -> Void) {
-            if let succeeClosure = succeeClosure {
-                succeeClosure(dataTask, proposedResponse.data)
+            if let successClosure = successClosure {
+                successClosure(dataTask, proposedResponse.data)
             }
         }
     }

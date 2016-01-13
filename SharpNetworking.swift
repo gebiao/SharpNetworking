@@ -16,10 +16,10 @@ public func getDataRequest(
     encoding: ParameteEncoding = .URL,
     heard: [String : String]? = nil,
     progress: Request.ProgressClosure?,
-    succee: Request.SucceeClosure?,
+    success: Request.SuccessClosure?,
     failure: Request.FailureClosure?) -> Request {
         
-        return Manager.sharedInstance.request(method, URLString: URLString, parameters: parameters, encoding: encoding, heard: heard, progress: progress, succee: succee, failure: failure)
+        return Manager.sharedInstance.request(method, URLString: URLString, parameters: parameters, encoding: encoding, heard: heard, progress: progress, success: success, failure: failure)
 }
 
 public func download(
@@ -30,17 +30,54 @@ public func download(
     heard: [String : String]? = nil,
     destination: Request.DownloadFileDestination,
     progress: Request.ProgressClosure?,
-    succee: Request.SucceeClosure?,
+    success: Request.SuccessClosure?,
     failure: Request.FailureClosure?) -> Request {
         
-        return Manager.sharedInstance.download(method, URLString: URLString, parameters: parameters, encoding: encoding, heard: heard, destination: destination, progress: progress, succee: succee, failure: failure)
+        return Manager.sharedInstance.download(method, URLString: URLString, parameters: parameters, encoding: encoding, heard: heard, destination: destination, progress: progress, success: success, failure: failure)
 }
 
 public func download(
     resumeData: NSData,
     destination: Request.DownloadFileDestination,
     progress: Request.ProgressClosure?,
-    succee: Request.SucceeClosure?,
+    success: Request.SuccessClosure?,
     failure: Request.FailureClosure?) -> Request {
-        return Manager.sharedInstance.download(resumeData, destination: destination, progress: progress, succee: succee, failure: failure)
+        return Manager.sharedInstance.download(resumeData, destination: destination, progress: progress, success: success, failure: failure)
+}
+
+public func upload(
+    method: Method,
+    URLString: String,
+    parametes: [String : String]? = nil,
+    encoding: ParameteEncoding = .URL,
+    heards: [String : String]? = nil,
+    progress: Request.ProgressClosure? = nil,
+    success: Request.SuccessClosure? = nil,
+    failure: Request.FailureClosure? = nil) -> Request {
+        return Manager.sharedInstance.upload(method, URLString: URLString, parametes: parametes, encoding: encoding, heards: heards, progress: progress, success: success, failure: failure)
+}
+
+public func upload(
+    method: Method,
+    URLString: String,
+    encoding: ParameteEncoding = .URL,
+    data: NSData,
+    heards: [String : String]? = nil,
+    progress: Request.ProgressClosure? = nil,
+    success: Request.SuccessClosure? = nil,
+    failure: Request.FailureClosure? = nil) -> Request {
+        
+        return Manager.sharedInstance.upload(method, URLString: URLString, encoding: encoding, data: data, heards: heards, progress: progress, success: success, failure: failure)
+}
+
+public func upload(
+    method: Method,
+    URLString: String,
+    encoding: ParameteEncoding = .URL,
+    fileURL: NSURL,
+    heards: [String : String]? = nil,
+    progress: Request.ProgressClosure? = nil,
+    success: Request.SuccessClosure? = nil,
+    failure: Request.FailureClosure? = nil) -> Request {
+        return Manager.sharedInstance.upload(method, URLString: URLString, encoding: encoding, fileURL: fileURL, heards: heards, progress: progress, success: success, failure: failure)
 }

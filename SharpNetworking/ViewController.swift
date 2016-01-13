@@ -34,7 +34,7 @@ class ViewController: UIViewController {
             downloadProgress.text = ""
             self.downloadRequest = download(.GET, URLString: imageUrl, destination: destination, progress: { (progress) -> Void in
                 dispatch_async(dispatch_get_main_queue()) { self.downloadProgress.text = progress.localizedDescription }
-                }, succee: { (task, data) -> Void in
+                }, success: { (task, data) -> Void in
                     dispatch_async(dispatch_get_main_queue(), { [unowned self]() -> Void in
                         let image = UIImage.init(data: data)
                         self.backImageView.image = image
@@ -63,7 +63,7 @@ class ViewController: UIViewController {
             let destination = Request.suggestDownloadFileDesination(.DocumentDirectory, domains: .UserDomainMask)
             download(resumeData, destination: destination, progress: { (progress) -> Void in
                 dispatch_async(dispatch_get_main_queue()) { self.downloadProgress.text = progress.localizedDescription }
-                }, succee: { (task, data) -> Void in
+                }, success: { (task, data) -> Void in
                     dispatch_async(dispatch_get_main_queue(), { [unowned self]() -> Void in
                         let image = UIImage.init(data: data)
                         self.backImageView.image = image
@@ -102,7 +102,7 @@ class ViewController: UIViewController {
         getDataProgress.text = ""
         dataRequest = getDataRequest(.GET, URLString: getUrl, parameters: nil, encoding: .URL, heard: nil, progress: { (progress) -> Void in
             dispatch_async(dispatch_get_main_queue()) { self.getDataProgress.text = progress.localizedDescription }
-            }, succee: { (task, data) -> Void in
+            }, success: { (task, data) -> Void in
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     do {
                         let json = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions())
