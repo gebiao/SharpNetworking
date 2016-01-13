@@ -79,15 +79,28 @@ class ViewController: UIViewController {
     
     //Upload Test
     @IBAction func startUploadAction(sender: AnyObject) {
+        let url = "https://httpbin.org/"
+        let fileUrl = NSBundle.mainBundle().pathForResource("beautiful", ofType: "jpg")
+        let data = NSData.init(contentsOfURL: NSURL.init(fileURLWithPath: fileUrl!))
+        guard let data_0 = data else { return }
         
-        
+        upload(.POST, URLString: url, data: data_0, progress: { (progress) -> Void in
+            dispatch_async(dispatch_get_main_queue()) { self.uploadProgress.text = progress.localizedDescription }
+            }, success: { (task, data) -> Void in
+                print("upload success")
+            }) { (task, error) -> Void in
+                print("error : \(error)")
+        }
     }
     
     @IBAction func suspendUploadAction(sender: AnyObject) {
+        
     }
     
     @IBAction func cancelUploadAction(sender: AnyObject) {
     }
+    
+    
     
     //GetData Test
     @IBAction func startGetDataAction(sender: AnyObject) {

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		672B27D61C463F9C002BDC69 /* beautiful.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 672B27D51C463F9C002BDC69 /* beautiful.jpg */; };
 		673637041C3DF7EE007B3BC6 /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673637031C3DF7EE007B3BC6 /* Manager.swift */; };
 		673637061C3DF812007B3BC6 /* ParamentsEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673637051C3DF812007B3BC6 /* ParamentsEncoding.swift */; };
 		673637081C3DF81B007B3BC6 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673637071C3DF81B007B3BC6 /* Request.swift */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		672B27D51C463F9C002BDC69 /* beautiful.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = beautiful.jpg; sourceTree = "<group>"; };
 		673637031C3DF7EE007B3BC6 /* Manager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Manager.swift; sourceTree = SOURCE_ROOT; };
 		673637051C3DF812007B3BC6 /* ParamentsEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParamentsEncoding.swift; sourceTree = SOURCE_ROOT; };
 		673637071C3DF81B007B3BC6 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = SOURCE_ROOT; };
@@ -53,6 +55,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		672B27D11C463E0E002BDC69 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				672B27D21C463E19002BDC69 /* images */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		672B27D21C463E19002BDC69 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				672B27D51C463F9C002BDC69 /* beautiful.jpg */,
+			);
+			name = images;
+			sourceTree = "<group>";
+		};
 		673637011C3DF76D007B3BC6 /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -78,6 +96,7 @@
 		67E872821C3CEEB2006E1D0D = {
 			isa = PBXGroup;
 			children = (
+				672B27D11C463E0E002BDC69 /* Resources */,
 				67E8728D1C3CEEB2006E1D0D /* SharpNetworking */,
 				67E8728C1C3CEEB2006E1D0D /* Products */,
 			);
@@ -174,6 +193,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				67E872991C3CEEB2006E1D0D /* LaunchScreen.storyboard in Resources */,
+				672B27D61C463F9C002BDC69 /* beautiful.jpg in Resources */,
 				67E872961C3CEEB2006E1D0D /* Assets.xcassets in Resources */,
 				67E872941C3CEEB2006E1D0D /* Main.storyboard in Resources */,
 			);

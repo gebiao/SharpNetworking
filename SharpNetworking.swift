@@ -51,9 +51,9 @@ public func upload(
     parametes: [String : String]? = nil,
     encoding: ParameteEncoding = .URL,
     heards: [String : String]? = nil,
-    progress: Request.ProgressClosure? = nil,
-    success: Request.SuccessClosure? = nil,
-    failure: Request.FailureClosure? = nil) -> Request {
+    progress: Request.ProgressClosure?,
+    success: Request.SuccessClosure?,
+    failure: Request.FailureClosure?) -> Request {
         return Manager.sharedInstance.upload(method, URLString: URLString, parametes: parametes, encoding: encoding, heards: heards, progress: progress, success: success, failure: failure)
 }
 
@@ -63,9 +63,9 @@ public func upload(
     encoding: ParameteEncoding = .URL,
     data: NSData,
     heards: [String : String]? = nil,
-    progress: Request.ProgressClosure? = nil,
-    success: Request.SuccessClosure? = nil,
-    failure: Request.FailureClosure? = nil) -> Request {
+    progress: Request.ProgressClosure?,
+    success: Request.SuccessClosure?,
+    failure: Request.FailureClosure?) -> Request {
         
         return Manager.sharedInstance.upload(method, URLString: URLString, encoding: encoding, data: data, heards: heards, progress: progress, success: success, failure: failure)
 }
@@ -76,8 +76,8 @@ public func upload(
     encoding: ParameteEncoding = .URL,
     fileURL: NSURL,
     heards: [String : String]? = nil,
-    progress: Request.ProgressClosure? = nil,
-    success: Request.SuccessClosure? = nil,
-    failure: Request.FailureClosure? = nil) -> Request {
+    progress: Request.ProgressClosure?,
+    success: Request.SuccessClosure?,
+    failure: Request.FailureClosure?) -> Request {
         return Manager.sharedInstance.upload(method, URLString: URLString, encoding: encoding, fileURL: fileURL, heards: heards, progress: progress, success: success, failure: failure)
 }
