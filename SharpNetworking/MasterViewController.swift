@@ -26,12 +26,7 @@ class MasterViewController: UITableViewController {
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-        guard let
-            navigationController = segue.destinationViewController as? UINavigationController,
-            detailViewController = navigationController.topViewController as? DetailViewController
-            else { return }
+        let detailViewController = segue.destinationViewController as! DetailViewController
         detailViewController.requestIdentifier = segue.identifier!
         switch segue.identifier! {
         case "Data GET":

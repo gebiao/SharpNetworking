@@ -21,6 +21,7 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.bodyContent.editable = false 
         
         // Do any additional setup after loading the view.
     }
@@ -50,7 +51,7 @@ class DetailViewController: UIViewController {
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         do {
                             let json = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions())
-                            print("json = \(json)")
+                            self.bodyContent.text = "\(json)"
                         } catch {
                             
                         }
@@ -66,7 +67,7 @@ class DetailViewController: UIViewController {
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         do {
                             let json = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions())
-                            print("json = \(json)")
+                            self.bodyContent.text = "\(json)"
                         } catch {
                             
                         }
@@ -82,7 +83,7 @@ class DetailViewController: UIViewController {
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         do {
                             let json = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions())
-                            print("json = \(json)")
+                            self.bodyContent.text = "\(json)"
                         } catch {
                             
                         }
@@ -98,7 +99,7 @@ class DetailViewController: UIViewController {
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         do {
                             let json = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions())
-                            print("json = \(json)")
+                            self.bodyContent.text = "\(json)"
                         } catch {
                             
                         }
