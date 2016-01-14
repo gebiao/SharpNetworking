@@ -124,8 +124,8 @@ class DetailViewController: UIViewController {
             
         case "Download Resume Data":
             let destination = Request.suggestDownloadFileDesination(.DocumentDirectory, domains: .UserDomainMask)
-            
-            request = download(NSData(), destination: destination, progress: { (progress) -> Void in
+            guard let resumeData = resumeData else { return }
+            request = download(resumeData, destination: destination, progress: { (progress) -> Void in
                 dispatch_async(dispatch_get_main_queue()) { self.progressTitle.text = progress.localizedDescription }
                 }, success: { (task, data) -> Void in
                     dispatch_async(dispatch_get_main_queue(), { [unowned self]() -> Void in
@@ -169,5 +169,8 @@ class DetailViewController: UIViewController {
     }
     @IBAction func goOnAction(sender: AnyObject) {
         request.resume()
+        if let downloadDele = request.delegate as? Request.DownloadTaskDelegate {
+            resumeData = downloadDele.resumeData
+        }
     }
 }
