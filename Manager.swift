@@ -162,7 +162,9 @@ public class Manager {
         }
         
         public func URLSession(session: NSURLSession, task: NSURLSessionTask, needNewBodyStream completionHandler: (NSInputStream?) -> Void) {
-            
+            if let taskDelegate = self[task] {
+                taskDelegate.URLSession(session, task: task, needNewBodyStream: completionHandler)
+            }
         }
         
         public func URLSession(session: NSURLSession, task: NSURLSessionTask, didSendBodyData bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64) {
@@ -179,21 +181,11 @@ public class Manager {
         
         //MARK: -SessionDataDelegate
         public func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveResponse response: NSURLResponse, completionHandler: (NSURLSessionResponseDisposition) -> Void) {
-            if let dataTaskDelegate = self[dataTask] as? Request.DataTaskDelegate {
-                dataTaskDelegate.URLSession(session, dataTask: dataTask, didReceiveResponse: response, completionHandler: completionHandler)
-            }
-        }
-        
-        public func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didBecomeStreamTask streamTask: NSURLSessionStreamTask) {
-            if let dataTaskDelegate = self[dataTask] as? Request.DataTaskDelegate {
-                dataTaskDelegate.URLSession(session, dataTask: dataTask, didBecomeStreamTask: streamTask)
-            }
+            completionHandler(.Allow)
         }
         
         public func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didBecomeDownloadTask downloadTask: NSURLSessionDownloadTask) {
-            if let dataTaskDelegate = self[dataTask] as? Request.DataTaskDelegate {
-                dataTaskDelegate.URLSession(session, dataTask: dataTask, didBecomeDownloadTask: downloadTask)
-            }
+            self[dataTask] = Request.DownloadTaskDelegate(task: dataTask)
         }
         
         public func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData) {
