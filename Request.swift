@@ -115,8 +115,11 @@ public class Request {
                 failureClosure = failureClosure,
                 error = error {
                     failureClosure(task, error)
-            } else if let successClosure = successClosure {
-                successClosure(task, data!)
+            } else if let
+                successClosure = successClosure,
+                data = data
+            {
+                successClosure(task, data)
             }
         }
     }

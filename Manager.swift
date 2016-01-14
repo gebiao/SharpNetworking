@@ -144,8 +144,6 @@ public class Manager {
             
             let disposition: NSURLSessionAuthChallengeDisposition = .UseCredential
             completionHandler(disposition,  NSURLCredential(forTrust: challenge.protectionSpace.serverTrust!))
-            
-            //            print("===\(authenticationMethod)")
         }
         
         public func URLSessionDidFinishEventsForBackgroundURLSession(session: NSURLSession) {
