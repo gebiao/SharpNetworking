@@ -21,7 +21,7 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.bodyContent.editable = false 
+        self.bodyContent.editable = false
         
         // Do any additional setup after loading the view.
     }
