@@ -17,6 +17,7 @@
 		6736370E1C3DF840007B3BC6 /* Upload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6736370D1C3DF840007B3BC6 /* Upload.swift */; };
 		673637101C3DF87A007B3BC6 /* ResponseSerialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6736370F1C3DF87A007B3BC6 /* ResponseSerialization.swift */; };
 		673637121C3DF890007B3BC6 /* SecurityPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673637111C3DF890007B3BC6 /* SecurityPolicy.swift */; };
+		6755636B1C47AA5F00079901 /* Stream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6755636A1C47AA5F00079901 /* Stream.swift */; };
 		676133BC1C3E353100ED7C0C /* SharpNetworking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 676133BB1C3E353100ED7C0C /* SharpNetworking.swift */; };
 		67CCF4141C47461700BAC86F /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67CCF4131C47461700BAC86F /* DetailViewController.swift */; };
 		67CCF4161C47463100BAC86F /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67CCF4151C47463100BAC86F /* MasterViewController.swift */; };
@@ -38,6 +39,7 @@
 		6736370D1C3DF840007B3BC6 /* Upload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Upload.swift; sourceTree = SOURCE_ROOT; };
 		6736370F1C3DF87A007B3BC6 /* ResponseSerialization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseSerialization.swift; sourceTree = SOURCE_ROOT; };
 		673637111C3DF890007B3BC6 /* SecurityPolicy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityPolicy.swift; sourceTree = SOURCE_ROOT; };
+		6755636A1C47AA5F00079901 /* Stream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stream.swift; sourceTree = SOURCE_ROOT; };
 		676133BB1C3E353100ED7C0C /* SharpNetworking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharpNetworking.swift; sourceTree = SOURCE_ROOT; };
 		67CCF4131C47461700BAC86F /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		67CCF4151C47463100BAC86F /* MasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 			children = (
 				6736370B1C3DF836007B3BC6 /* Download.swift */,
 				6736370D1C3DF840007B3BC6 /* Upload.swift */,
+				6755636A1C47AA5F00079901 /* Stream.swift */,
 				6736370F1C3DF87A007B3BC6 /* ResponseSerialization.swift */,
 				673637111C3DF890007B3BC6 /* SecurityPolicy.swift */,
 			);
@@ -229,6 +232,7 @@
 				676133BC1C3E353100ED7C0C /* SharpNetworking.swift in Sources */,
 				673637081C3DF81B007B3BC6 /* Request.swift in Sources */,
 				67CCF4161C47463100BAC86F /* MasterViewController.swift in Sources */,
+				6755636B1C47AA5F00079901 /* Stream.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
