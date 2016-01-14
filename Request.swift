@@ -115,6 +115,8 @@ public class Request {
                 failureClosure = failureClosure,
                 error = error {
                     failureClosure(task, error)
+            } else if let successClosure = successClosure {
+                successClosure(task, data!)
             }
         }
     }
@@ -123,6 +125,10 @@ public class Request {
     public class DataTaskDelegate: TaskDelegate {
         
         private var totalDataReceived: Int64 = 0
+        private var mutableData: NSMutableData = NSMutableData()
+        override public var data: NSData {
+            return mutableData
+        }
         
         func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveResponse response: NSURLResponse, completionHandler: (NSURLSessionResponseDisposition) -> Void) {
             completionHandler(.Allow)
@@ -139,6 +145,7 @@ public class Request {
         func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData) {
             
             let expectedTotalDataLengeth = dataTask.response?.expectedContentLength ?? NSURLSessionTransferSizeUnknown
+            mutableData.appendData(data)
             totalDataReceived += data.length
             progress.totalUnitCount = expectedTotalDataLengeth
             progress.completedUnitCount = totalDataReceived

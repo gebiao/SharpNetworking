@@ -14,7 +14,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var backGroundImageView: UIImageView!
     @IBOutlet weak var progressTitle: UILabel!
     
-    var request: Request!
+    var request: Request?
     var requestIdentifier: String!
     var URL: String!
     var resumeData: NSData?
@@ -162,12 +162,15 @@ class DetailViewController: UIViewController {
         }
     }
     @IBAction func suspendAction(sender: AnyObject) {
+        guard let request = request else { return }
         request.suspend()
     }
     @IBAction func cancelAction(sender: AnyObject) {
+        guard let request = request else { return }
         request.cancel()
     }
     @IBAction func goOnAction(sender: AnyObject) {
+        guard let request = request else { return }
         request.resume()
         if let downloadDele = request.delegate as? Request.DownloadTaskDelegate {
             resumeData = downloadDele.resumeData

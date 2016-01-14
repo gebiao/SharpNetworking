@@ -172,7 +172,9 @@ public class Manager {
         }
         
         public func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
-            
+            if let taskDelegate = self[task] {
+                taskDelegate.URLSession(session, task: task, didCompleteWithError: error)
+            }
         }
         
         //MARK: -SessionDataDelegate
