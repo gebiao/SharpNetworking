@@ -14,7 +14,6 @@ class ImagesDisplayCollectionViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "ImageView_setImage"
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
@@ -29,6 +28,8 @@ class ImagesDisplayCollectionViewController: UICollectionViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func cleanCache(sender: AnyObject) {
+    }
     /*
     // MARK: - Navigation
     

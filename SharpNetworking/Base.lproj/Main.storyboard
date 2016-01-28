@@ -412,10 +412,10 @@
             </objects>
             <point key="canvasLocation" x="1074" y="516"/>
         </scene>
-        <!--Collection View Controller-->
+        <!--ImageView_setImage-->
         <scene sceneID="zGN-z3-q83">
             <objects>
-                <collectionViewController id="MQ8-SE-3xK" sceneMemberID="viewController">
+                <collectionViewController id="MQ8-SE-3xK" customClass="ImagesDisplayCollectionViewController" customModule="SharpNetworking" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="C2W-5R-4JK">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -432,7 +432,13 @@
                             <outlet property="delegate" destination="MQ8-SE-3xK" id="Kzn-hB-PVg"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" id="2iQ-dq-tdj"/>
+                    <navigationItem key="navigationItem" title="ImageView_setImage" id="2iQ-dq-tdj">
+                        <barButtonItem key="rightBarButtonItem" title="cleanCache" id="5jM-Nz-Sxq">
+                            <connections>
+                                <action selector="cleanCache:" destination="MQ8-SE-3xK" id="Md3-gF-vSN"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AOK-4e-beC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
