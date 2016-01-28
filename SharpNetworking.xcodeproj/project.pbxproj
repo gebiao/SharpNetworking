@@ -44,6 +44,7 @@
 		673637111C3DF890007B3BC6 /* SecurityPolicy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityPolicy.swift; sourceTree = SOURCE_ROOT; };
 		6755636A1C47AA5F00079901 /* Stream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stream.swift; sourceTree = SOURCE_ROOT; };
 		675F45951C59DAB000B127F1 /* ImagesDisplayCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagesDisplayCollectionViewController.swift; sourceTree = "<group>"; };
+		675F45971C5A2C0900B127F1 /* bridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bridge.h; sourceTree = "<group>"; };
 		676133BB1C3E353100ED7C0C /* SharpNetworking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharpNetworking.swift; sourceTree = SOURCE_ROOT; };
 		67CCF4131C47461700BAC86F /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		67CCF4151C47463100BAC86F /* MasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
@@ -144,6 +145,7 @@
 				67CCF4151C47463100BAC86F /* MasterViewController.swift */,
 				67CCF4131C47461700BAC86F /* DetailViewController.swift */,
 				675F45951C59DAB000B127F1 /* ImagesDisplayCollectionViewController.swift */,
+				675F45971C5A2C0900B127F1 /* bridge.h */,
 				67E872921C3CEEB2006E1D0D /* Main.storyboard */,
 				67E872951C3CEEB2006E1D0D /* Assets.xcassets */,
 				67E872971C3CEEB2006E1D0D /* LaunchScreen.storyboard */,
@@ -155,8 +157,8 @@
 		67E872A01C3CEF08006E1D0D /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				67CF8BE71C58BF18007A1BC4 /* UIKit+SharpNetworking */,
 				676133BB1C3E353100ED7C0C /* SharpNetworking.swift */,
+				67CF8BE71C58BF18007A1BC4 /* UIKit+SharpNetworking */,
 				673637011C3DF76D007B3BC6 /* Core */,
 				673637021C3DF7C5007B3BC6 /* Features */,
 			);
@@ -371,6 +373,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = www.360.com.SharpNetworking;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = SharpNetworking/bridge.h;
 			};
 			name = Debug;
 		};
@@ -385,6 +388,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = www.360.com.SharpNetworking;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = SharpNetworking/bridge.h;
 			};
 			name = Release;
 		};
