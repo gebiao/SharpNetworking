@@ -207,7 +207,7 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="UIkit+SharpNetworking" id="LYL-El-Vlt" userLabel="UPLOAD">
+                            <tableViewSection headerTitle="UIkit+SharpNetworking" id="LYL-El-Vlt" userLabel="UIkit+SharpNetworking">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="BTk-bt-LBC" rowHeight="39" style="IBUITableViewCellStyleDefault" id="Sia-zN-Kfs">
                                         <rect key="frame" x="0.0" y="615" width="600" height="39"/>
@@ -216,15 +216,18 @@
                                             <rect key="frame" x="0.0" y="0.0" width="567" height="38.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text=" Upload Data" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BTk-bt-LBC">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="ImageDisplay" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BTk-bt-LBC">
                                                     <rect key="frame" x="15" y="0.0" width="550" height="38.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="MQ8-SE-3xK" kind="push" id="DJr-Uh-ZaO"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -409,23 +412,31 @@
             </objects>
             <point key="canvasLocation" x="1074" y="516"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="8gQ-Nr-cDr">
+        <!--Collection View Controller-->
+        <scene sceneID="zGN-z3-q83">
             <objects>
-                <viewController id="X5o-PL-DUm" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="8hc-ng-4Ov"/>
-                        <viewControllerLayoutGuide type="bottom" id="Lfy-WA-3tm"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="FJ7-06-reM">
+                <collectionViewController id="MQ8-SE-3xK" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="C2W-5R-4JK">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="QIM-yz-foI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="P8p-6A-Zcb">
+                            <size key="itemSize" width="477" height="155"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells/>
+                        <connections>
+                            <outlet property="dataSource" destination="MQ8-SE-3xK" id="6X7-5p-db4"/>
+                            <outlet property="delegate" destination="MQ8-SE-3xK" id="Kzn-hB-PVg"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" id="2iQ-dq-tdj"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AOK-4e-beC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1344" y="1228"/>
+            <point key="canvasLocation" x="1398" y="1209"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
