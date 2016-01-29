@@ -19,7 +19,7 @@ extension UIImageView {
             if let image = image {//有存储
                 
             } else {//没有存储情况
-                
+
             }
         }
         
