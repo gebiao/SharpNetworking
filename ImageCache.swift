@@ -15,16 +15,17 @@ public class ImageCache {
     let memoryCache: NSCache = NSCache()
     private let io_queue: dispatch_queue_t!
     private var defaultManager: NSFileManager!
-    private let diskPath: String!
+    let diskPath: String!
     
     public init(name: String) {
         if name.isEmpty {
             fatalError("memory cache empty is not permitted.")
         }
         
-        self.diskPath = (NSSearchPathForDirectoriesInDomains(.CachesDirectory, NSSearchPathDomainMask.UserDomainMask, true).first! as NSString).stringByAppendingPathComponent(defaultMemoryCacheName)
+        memoryCache.name = name
+        self.diskPath = (NSSearchPathForDirectoriesInDomains(.CachesDirectory, NSSearchPathDomainMask.UserDomainMask, true).first! as NSString).stringByAppendingPathComponent(defaultMemoryCacheName + name)
         
-        self.io_queue = dispatch_queue_create(defaultIOququeName, DISPATCH_QUEUE_SERIAL)
+        self.io_queue = dispatch_queue_create(defaultIOququeName + name, DISPATCH_QUEUE_SERIAL)
         dispatch_async(io_queue) { self.defaultManager = NSFileManager() }
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "receiveMemoryWarningAction", name: UIApplicationDidReceiveMemoryWarningNotification, object: nil)
@@ -82,11 +83,25 @@ extension ImageCache {
 
 extension ImageCache {
     func retrieveImageForKey(key: String, completedHandler: ((UIImage?) -> Void)?) {
-        let imageObj = memoryCache.objectForKey(key)
-        guard let image: UIImage = imageObj as? UIImage else { return }
+        func callbackCompleted(image: UIImage?) {
+            if let completedHandler = completedHandler {
+                dispatch_async(dispatch_get_main_queue()) { completedHandler(image) }
+            }
+        }
         
-        if let completedHandler = completedHandler {
-            dispatch_async(dispatch_get_main_queue()) { completedHandler(image) }
+        if let image = memoryCache.objectForKey(key) where (image is UIImage) {
+            callbackCompleted(image as? UIImage)
+        } else {
+            let singleDiskPath = (self.diskPath as NSString).stringByAppendingPathComponent(key.md5())
+            if let originData = NSData.init(contentsOfFile: singleDiskPath) {
+                if let image = UIImage.init(data: originData) {
+                    callbackCompleted(image)
+                } else {
+                    callbackCompleted(nil)
+                }
+            } else {
+                callbackCompleted(nil)
+            }
         }
     }
 }

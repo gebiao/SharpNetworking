@@ -80,7 +80,7 @@ extension Request {
     
     public typealias DownloadFileDestination = (NSURL, NSHTTPURLResponse) -> NSURL
     
-    public class func suggestDownloadFileDesination(
+    public static func suggestDownloadFileDesination(
         directory: NSSearchPathDirectory = .DocumentDirectory,
         domains: NSSearchPathDomainMask = .UserDomainMask) -> DownloadFileDestination {
             return { temporaryURLs, response -> NSURL in
