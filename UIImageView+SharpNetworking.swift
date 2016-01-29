@@ -16,10 +16,10 @@ extension UIImageView {
         let memoryCache = ImageCache.init(name: urlString)
         
         memoryCache.retrieveImageForKey(key) { (image) -> Void in
-            if let image = image {//有存储
+            if let _ = image {//有存储
                 
             } else {//没有存储情况
-
+                
             }
         }
         
