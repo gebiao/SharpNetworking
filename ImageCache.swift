@@ -8,13 +8,24 @@
 
 import UIKit
 
+let defaultMemoryCacheName = "ShareNetworking.defaultMemoryCacheName"
+let defaultIOququeName = "ShareNetworking.defaultIOququeName"
+
 public class ImageCache {
     let memoryCache: NSCache = NSCache()
+    private let io_queue: dispatch_queue_t!
+    private var defaultManager: NSFileManager!
+    private let diskPath: String!
     
     public init(name: String) {
         if name.isEmpty {
             fatalError("memory cache empty is not permitted.")
         }
+        
+        self.diskPath = (NSSearchPathForDirectoriesInDomains(.CachesDirectory, NSSearchPathDomainMask.UserDomainMask, true).first! as NSString).stringByAppendingPathComponent(defaultMemoryCacheName)
+        
+        self.io_queue = dispatch_queue_create(defaultIOququeName, DISPATCH_QUEUE_SERIAL)
+        dispatch_async(io_queue) { self.defaultManager = NSFileManager() }
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "receiveMemoryWarningAction", name: UIApplicationDidReceiveMemoryWarningNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "enterBackgroundAction", name: UIApplicationDidEnterBackgroundNotification, object: nil
@@ -39,20 +50,28 @@ public class ImageCache {
 
 extension ImageCache {
     
-    func storeImageCache(image: UIImage, forKey key: String, toDisk: Bool, completedHandle: (() -> Void)?) {
-        memoryCache.setObject(image, forKey: key, cost: image.imageCost)
-        
+    func storeImageCache(originData: NSData, forKey key: String, completedHandle: (() -> Void)?) {
         func callbackCompletedInMainQueue() {
             if let handler = completedHandle {
                 dispatch_async(dispatch_get_main_queue()) { handler() }
             }
         }
         
-        if toDisk {
-            
-        } else {
+        func storeObjToDisk(imageData: NSData) {
+            if !self.defaultManager.fileExistsAtPath(self.diskPath) {
+                do {
+                    try self.defaultManager.createDirectoryAtPath(self.diskPath, withIntermediateDirectories: true, attributes: nil)
+                } catch {
+                    
+                }
+            }
+            self.defaultManager.createFileAtPath(key.md5(), contents: imageData, attributes: nil)
             callbackCompletedInMainQueue()
         }
+        
+        guard let image = UIImage.init(data: originData) else { fatalError("image or originData empty is not permitted.") }
+        memoryCache.setObject(image, forKey: key, cost: image.imageCost)
+        storeObjToDisk(originData)
     }
     
     //
@@ -69,7 +88,6 @@ extension ImageCache {
         if let completedHandler = completedHandler {
             dispatch_async(dispatch_get_main_queue()) { completedHandler(image) }
         }
-        
     }
 }
 
@@ -80,9 +98,9 @@ extension UIImage {
 }
 
 extension String {
-    func md5(string string: String) -> String {
+    func md5() -> String {
         var digest = [UInt8](count: Int(CC_MD5_DIGEST_LENGTH), repeatedValue: 0)
-        if let data = string.dataUsingEncoding(NSUTF8StringEncoding) {
+        if let data = self.dataUsingEncoding(NSUTF8StringEncoding) {
             CC_MD5(data.bytes, CC_LONG(data.length), &digest)
         }
         
