@@ -220,7 +220,7 @@
                                                     <rect key="frame" x="15" y="0.0" width="550" height="38.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -421,12 +421,36 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="P8p-6A-Zcb">
-                            <size key="itemSize" width="477" height="155"/>
+                            <size key="itemSize" width="248" height="194"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
-                        <cells/>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CollectViewCellIdentifier" id="9ge-ND-pHD" customClass="CollectViewCell" customModule="SharpNetworking" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="64" width="248" height="194"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="248" height="194"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XZp-Nh-cIC">
+                                            <rect key="frame" x="8" y="8" width="232" height="178"/>
+                                        </imageView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <constraints>
+                                    <constraint firstAttribute="bottomMargin" secondItem="XZp-Nh-cIC" secondAttribute="bottom" id="296-Ij-O6t"/>
+                                    <constraint firstItem="XZp-Nh-cIC" firstAttribute="top" secondItem="9ge-ND-pHD" secondAttribute="topMargin" id="PFg-wg-86j"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="XZp-Nh-cIC" secondAttribute="trailing" id="coj-gs-RC0"/>
+                                    <constraint firstItem="XZp-Nh-cIC" firstAttribute="leading" secondItem="9ge-ND-pHD" secondAttribute="leadingMargin" id="gzF-2f-u6D"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="cellImageView" destination="XZp-Nh-cIC" id="5KX-hh-gWN"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
                         <connections>
                             <outlet property="dataSource" destination="MQ8-SE-3xK" id="6X7-5p-db4"/>
                             <outlet property="delegate" destination="MQ8-SE-3xK" id="Kzn-hB-PVg"/>

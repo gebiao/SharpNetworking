@@ -141,7 +141,7 @@ extension String {
         for index in 0..<Int(CC_MD5_DIGEST_LENGTH) {
             digestHex += String(format: "%02x", digest[index])
         }
-        
+        print("\(digestHex)")
         return digestHex
     }
 }
