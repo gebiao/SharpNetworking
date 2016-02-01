@@ -92,6 +92,12 @@ extension Request {
             }
     }
     
+    public static func suggestDownloadImageDestination(fileURL: NSURL) -> DownloadFileDestination {
+        return {_,_ in
+            return fileURL
+        }
+    }
+    
     
     /// DownloadDelegate
     class DownloadTaskDelegate: TaskDelegate, NSURLSessionDownloadDelegate {

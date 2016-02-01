@@ -81,26 +81,44 @@ extension ImageCache {
     }
 }
 
+
 extension ImageCache {
-    func retrieveImageForKey(key: String, completedHandler: ((UIImage?) -> Void)?) {
-        func callbackCompleted(image: UIImage?) {
-            if let completedHandler = completedHandler {
-                dispatch_async(dispatch_get_main_queue()) { completedHandler(image) }
+    
+    typealias CompletedHandler = (() -> UIImage?)
+    
+    func retrieveImageForKey(key: String) -> CompletedHandler {
+//        func callbackCompleted(image: UIImage?) {
+//            if let completedHandler = completedHandler {
+//                dispatch_async(dispatch_get_main_queue()) { completedHandler(image) }
+//            }
+//        }
+        
+        func returnValue(image: UIImage?) -> CompletedHandler {
+            return {
+                return image
             }
         }
-        
+
         if let image = memoryCache.objectForKey(key) where (image is UIImage) {
-            callbackCompleted(image as? UIImage)
+            return {
+                return (image as! UIImage)
+            }
         } else {
             let singleDiskPath = (self.diskPath as NSString).stringByAppendingPathComponent(key.md5())
             if let originData = NSData.init(contentsOfFile: singleDiskPath) {
                 if let image = UIImage.init(data: originData) {
-                    callbackCompleted(image)
+                    return {
+                        return image
+                    }
                 } else {
-                    callbackCompleted(nil)
+                    return {
+                        return nil
+                    }
                 }
             } else {
-                callbackCompleted(nil)
+                return {
+                    return nil
+                }
             }
         }
     }
