@@ -114,24 +114,25 @@ extension Request {
         var downloadDataCompleted: ((NSURLSession, NSURLSessionDownloadTask, NSURL, NSData?) -> Void)?
         
         func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didFinishDownloadingToURL location: NSURL) {
-            if let downloadDestinationToURL = downloadDestinationToURL {
-                let destinationToURL = downloadDestinationToURL(session, downloadTask, location)
-                do {
-                    try NSFileManager.defaultManager().moveItemAtURL(location, toURL: destinationToURL)
-                    print("download destination: \(destinationToURL)")
-                } catch {
-                    self.error = error as NSError
-                    print("download write to file error: \(error)")
-                }
-                if let downloadDataCompleted = downloadDataCompleted {
-                    let data = NSData.init(contentsOfURL: destinationToURL)
-                    downloadDataCompleted(session, downloadTask, destinationToURL, data)
-                }
-                
-                if let successClosure = successClosure {
-                    successClosure(downloadTask, NSData.init(contentsOfURL: destinationToURL)!)
-                }
+            
+            if let successClosure = successClosure, data = NSData.init(contentsOfURL: location) {
+                successClosure(downloadTask, data)
             }
+            
+//            if let downloadDestinationToURL = downloadDestinationToURL {
+//                let destinationToURL = downloadDestinationToURL(session, downloadTask, location)
+//                do {
+//                    try NSFileManager.defaultManager().moveItemAtURL(location, toURL: destinationToURL)
+//                    print("download destination: \(destinationToURL)")
+//                } catch {
+//                    self.error = error as NSError
+//                    print("download write to file error: \(error)")
+//                }
+//                if let downloadDataCompleted = downloadDataCompleted {
+//                    let data = NSData.init(contentsOfURL: destinationToURL)
+//                    downloadDataCompleted(session, downloadTask, destinationToURL, data)
+//                }
+//            }
         }
         
         func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
