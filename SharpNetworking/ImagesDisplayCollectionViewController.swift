@@ -23,6 +23,7 @@ class ImagesDisplayCollectionViewController: UICollectionViewController {
     }
     
     @IBAction func cleanCache(sender: AnyObject) {
+        SharpNetManager.manager.cleanImageCache()
     }
     
     // MARK: UICollectionViewDataSource

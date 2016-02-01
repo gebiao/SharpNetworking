@@ -73,7 +73,10 @@ extension ImageCache {
                     
                 }
             }
-            self.defaultManager.createFileAtPath(key.md5(), contents: imageData, attributes: nil)
+            
+            let diskImagePath = (diskPath as NSString).stringByAppendingPathComponent(key.md5())
+            defaultManager.createFileAtPath(diskImagePath, contents: imageData, attributes: nil)
+            
             callbackCompletedInMainQueue()
         }
         
@@ -94,11 +97,6 @@ extension ImageCache {
     typealias CompletedHandler = (() -> UIImage?)
     
     func retrieveImageForKey(key: String) -> CompletedHandler {
-        //        func callbackCompleted(image: UIImage?) {
-        //            if let completedHandler = completedHandler {
-        //                dispatch_async(dispatch_get_main_queue()) { completedHandler(image) }
-        //            }
-        //        }
         if let image = memoryCache.objectForKey(key.md5()) where (image is UIImage) {
             return {
                 return (image as! UIImage)
@@ -154,6 +152,10 @@ public class SharpNetManager {
     
     init() {
         memoryChache = ImageCache.defaultCache
+    }
+    
+    public func cleanImageCache() {
+        memoryChache.cleanCache()
     }
 }
 
