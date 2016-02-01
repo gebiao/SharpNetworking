@@ -28,8 +28,7 @@ extension UIImageView {
         if let image = completedHandle() {
             completedCallback(image, nil)
         } else {
-            let destination = Request.suggestDownloadImageDestination(NSURL.init(fileURLWithPath: memoryCache.diskPath))
-            download(.GET, URLString: urlstring, destination: destination, progress: { (progress) -> Void in
+            download(.GET, URLString: urlstring, destination: nil, progress: { (progress) -> Void in
                 
                 }, success: { (_, data) -> Void in
                     completedCallback(UIImage.init(data: data), nil)

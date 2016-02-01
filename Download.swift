@@ -26,7 +26,7 @@ extension Manager {
         }
         
         let request = Request(session: session, task: downloadTask)
-        if let downloadDelegate = request.delegate as? Request.DownloadTaskDelegate {
+        if let destination = destination, downloadDelegate = request.delegate as? Request.DownloadTaskDelegate {
             downloadDelegate.downloadDestinationToURL = { (session, task, URL) in
                 return destination(URL, task.response as! NSHTTPURLResponse)
             }
@@ -78,7 +78,7 @@ extension Manager {
 
 extension Request {
     
-    public typealias DownloadFileDestination = (NSURL, NSHTTPURLResponse) -> NSURL
+    public typealias DownloadFileDestination = ((NSURL, NSHTTPURLResponse) -> NSURL)?
     
     public static func suggestDownloadFileDesination(
         directory: NSSearchPathDirectory = .DocumentDirectory,
@@ -91,13 +91,6 @@ extension Request {
                 return temporaryURLs
             }
     }
-    
-    public static func suggestDownloadImageDestination(fileURL: NSURL) -> DownloadFileDestination {
-        return {_,_ in
-            return fileURL
-        }
-    }
-    
     
     /// DownloadDelegate
     class DownloadTaskDelegate: TaskDelegate, NSURLSessionDownloadDelegate {
@@ -119,26 +112,26 @@ extension Request {
                 successClosure(downloadTask, data)
             }
             
-//            if let downloadDestinationToURL = downloadDestinationToURL {
-//                let destinationToURL = downloadDestinationToURL(session, downloadTask, location)
-//                do {
-//                    try NSFileManager.defaultManager().moveItemAtURL(location, toURL: destinationToURL)
-//                    print("download destination: \(destinationToURL)")
-//                } catch {
-//                    self.error = error as NSError
-//                    print("download write to file error: \(error)")
-//                }
-//                if let downloadDataCompleted = downloadDataCompleted {
-//                    let data = NSData.init(contentsOfURL: destinationToURL)
-//                    downloadDataCompleted(session, downloadTask, destinationToURL, data)
-//                }
-//            }
+            if let downloadDestinationToURL = downloadDestinationToURL {
+                let destinationToURL = downloadDestinationToURL(session, downloadTask, location)
+                do {
+                    try NSFileManager.defaultManager().moveItemAtURL(location, toURL: destinationToURL)
+                    print("download destination: \(destinationToURL)")
+                } catch {
+                    self.error = error as NSError
+                    print("download write to file error: \(error)")
+                }
+                if let downloadDataCompleted = downloadDataCompleted {
+                    let data = NSData.init(contentsOfURL: destinationToURL)
+                    downloadDataCompleted(session, downloadTask, destinationToURL, data)
+                }
+            }
         }
         
         func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
             downloadProgress.totalUnitCount = totalBytesExpectedToWrite
             downloadProgress.completedUnitCount = totalBytesWritten
-//            print("download progress: \(self.downloadProgress.localizedDescription), \(downloadProgress)")
+            print("\(downloadTask.taskIdentifier) = download progress: \(self.downloadProgress.localizedDescription), \(downloadProgress)")
             if let downloadTaskDidWrited = downloadTaskDidWrited {
                 downloadTaskDidWrited(session, downloadTask, bytesWritten, totalBytesWritten, totalBytesExpectedToWrite)
             }

@@ -42,7 +42,6 @@ public class Request {
     }
     
     public func resume() {
-        print("task: \(task)")
         task.resume()
     }
     
