@@ -8,8 +8,9 @@
 
 import UIKit
 
-let defaultMemoryCacheName = "ShareNetworking.defaultMemoryCacheName"
-let defaultIOququeName = "ShareNetworking.defaultIOququeName"
+let defaultMemoryCacheName = "defaultMemoryCacheName"
+let defaultIOququeName = "defaultIOququeName"
+let defaultMemoryCache = ImageCache(name: defaultMemoryCacheName)
 
 public class ImageCache {
     let memoryCache: NSCache = NSCache()
@@ -34,6 +35,12 @@ public class ImageCache {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "terminateAction", name: UIApplicationWillTerminateNotification, object: nil)
         
     }
+    
+    public static var defaultCache: ImageCache {
+        return defaultMemoryCache
+    }
+    
+    
     
     @objc func receiveMemoryWarningAction() {
         cleanCache()
@@ -92,7 +99,7 @@ extension ImageCache {
         //                dispatch_async(dispatch_get_main_queue()) { completedHandler(image) }
         //            }
         //        }
-        if let image = memoryCache.objectForKey(key) where (image is UIImage) {
+        if let image = memoryCache.objectForKey(key.md5()) where (image is UIImage) {
             return {
                 return (image as! UIImage)
             }
@@ -140,6 +147,15 @@ extension String {
 
 
 
+public class SharpNetManager {
+    var memoryChache: ImageCache
+    
+    public static let manager = SharpNetManager()
+    
+    init() {
+        memoryChache = ImageCache.defaultCache
+    }
+}
 
 
 
