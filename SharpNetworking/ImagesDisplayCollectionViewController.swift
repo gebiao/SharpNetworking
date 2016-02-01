@@ -38,8 +38,6 @@ class ImagesDisplayCollectionViewController: UICollectionViewController {
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! CollectViewCell
-        
-        print("\(cell.dynamicType)")
         let url = "https://raw.githubusercontent.com/onevcat/Kingfisher/master/images/kingfisher-\(indexPath.row + 1).jpg"
         cell.cellImageView.gb_setImage(url, key: url, completedHandle: nil)
         

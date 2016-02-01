@@ -24,8 +24,6 @@ extension UIImageView {
     typealias CompletedCallback = (UIImage?, String?) -> Void
     func getMemoryOrDiskCacheImage(urlstring: String, key: String, completedCallback: CompletedCallback) {
         let memoryCache = SharpNetManager.manager.memoryChache
-        print("\(memoryCache)")
-        
         let completedHandle = memoryCache.retrieveImageForKey(key)
         if let image = completedHandle() {
             completedCallback(image, nil)
