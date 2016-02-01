@@ -28,8 +28,8 @@ class MasterViewController: UITableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let anyVC = segue.destinationViewController
         switch segue.destinationViewController {
-        case is ImagesDisplayCollectionViewController:
-            print("calss is ImagesDisplayCollectionViewController")
+        case is ImagesDisplayCollectionViewController: break
+//            print("calss is ImagesDisplayCollectionViewController")
         case is DetailViewController:
             let detailViewController = anyVC as! DetailViewController
             detailViewController.requestIdentifier = segue.identifier!

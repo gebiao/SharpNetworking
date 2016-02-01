@@ -14,7 +14,7 @@ class ImagesDisplayCollectionViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        //        self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
     }
     
     override func didReceiveMemoryWarning() {
@@ -23,7 +23,8 @@ class ImagesDisplayCollectionViewController: UICollectionViewController {
     }
     
     @IBAction func cleanCache(sender: AnyObject) {
-        SharpNetManager.manager.cleanImageCache()
+        SharpNetManager.manager.memoryChache.cleanCache()
+        SharpNetManager.manager.memoryChache.cleandiskCache()
     }
     
     // MARK: UICollectionViewDataSource

@@ -89,6 +89,15 @@ extension ImageCache {
     func cleanCache() {
         memoryCache.removeAllObjects()
     }
+    
+    func cleandiskCache() {
+        do {
+            try defaultManager.removeItemAtPath(diskPath)
+            try defaultManager.createDirectoryAtPath(diskPath, withIntermediateDirectories: true, attributes: nil)
+        } catch {
+            print("clean disk imageCache error!")
+        }
+    }
 }
 
 
@@ -152,10 +161,6 @@ public class SharpNetManager {
     
     init() {
         memoryChache = ImageCache.defaultCache
-    }
-    
-    public func cleanImageCache() {
-        memoryChache.cleanCache()
     }
 }
 
