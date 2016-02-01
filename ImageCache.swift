@@ -71,7 +71,7 @@ extension ImageCache {
         }
         
         guard let image = UIImage.init(data: originData) else { fatalError("image or originData empty is not permitted.") }
-        memoryCache.setObject(image, forKey: key, cost: image.imageCost)
+        memoryCache.setObject(image, forKey: key.md5(), cost: image.imageCost)
         storeObjToDisk(originData)
     }
     
@@ -87,18 +87,11 @@ extension ImageCache {
     typealias CompletedHandler = (() -> UIImage?)
     
     func retrieveImageForKey(key: String) -> CompletedHandler {
-//        func callbackCompleted(image: UIImage?) {
-//            if let completedHandler = completedHandler {
-//                dispatch_async(dispatch_get_main_queue()) { completedHandler(image) }
-//            }
-//        }
-        
-        func returnValue(image: UIImage?) -> CompletedHandler {
-            return {
-                return image
-            }
-        }
-
+        //        func callbackCompleted(image: UIImage?) {
+        //            if let completedHandler = completedHandler {
+        //                dispatch_async(dispatch_get_main_queue()) { completedHandler(image) }
+        //            }
+        //        }
         if let image = memoryCache.objectForKey(key) where (image is UIImage) {
             return {
                 return (image as! UIImage)
@@ -141,7 +134,6 @@ extension String {
         for index in 0..<Int(CC_MD5_DIGEST_LENGTH) {
             digestHex += String(format: "%02x", digest[index])
         }
-        print("\(digestHex)")
         return digestHex
     }
 }
