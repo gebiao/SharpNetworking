@@ -36,6 +36,10 @@ public class ImageCache {
         
     }
     
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
     public static var defaultCache: ImageCache {
         return defaultMemoryCache
     }
