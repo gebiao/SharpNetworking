@@ -12,9 +12,35 @@ private let reuseIdentifier = "CollectViewCellIdentifier"
 
 class ImagesDisplayCollectionViewController: UICollectionViewController {
     
+    private(set) var fpsLabel: UILabel!
+    private var link: CADisplayLink {
+        return CADisplayLink.init(target: self, selector: "tick:")
+    }
+    private var count: Int32 = 0
+    private var lastTime: NSTimeInterval = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        //        self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        
+        link.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSRunLoopCommonModes)
+        fpsLabel = UILabel(frame: CGRectMake(10, 64, 60, 30))
+        self.view.addSubview(fpsLabel)
+        
+    }
+    
+    //fps检测
+    @objc private func tick(link: CADisplayLink) {
+        if lastTime == 0 {
+            lastTime = link.timestamp
+            return
+        }
+        count++
+        let delta = link.timestamp - lastTime
+        if delta < 1 { return }
+        lastTime = link.timestamp
+        let fps = count / Int32(delta)
+        count = 0
+        fpsLabel.text = "\(fps) FPS"
     }
     
     override func didReceiveMemoryWarning() {
