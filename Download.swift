@@ -131,7 +131,7 @@ extension Request {
         func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
             downloadProgress.totalUnitCount = totalBytesExpectedToWrite
             downloadProgress.completedUnitCount = totalBytesWritten
-            print("\(downloadTask.taskIdentifier) = download progress: \(self.downloadProgress.localizedDescription), \(downloadProgress)")
+//            print("\(downloadTask.taskIdentifier) = download progress: \(self.downloadProgress.localizedDescription), \(downloadProgress)")
             if let downloadTaskDidWrited = downloadTaskDidWrited {
                 downloadTaskDidWrited(session, downloadTask, bytesWritten, totalBytesWritten, totalBytesExpectedToWrite)
             }
