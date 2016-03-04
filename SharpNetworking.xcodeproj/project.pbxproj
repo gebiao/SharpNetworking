@@ -29,6 +29,7 @@
 		67E872941C3CEEB2006E1D0D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 67E872921C3CEEB2006E1D0D /* Main.storyboard */; };
 		67E872961C3CEEB2006E1D0D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 67E872951C3CEEB2006E1D0D /* Assets.xcassets */; };
 		67E872991C3CEEB2006E1D0D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 67E872971C3CEEB2006E1D0D /* LaunchScreen.storyboard */; };
+		9F624C1F1C893263001B3F01 /* placeHoldImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F624C1E1C893263001B3F01 /* placeHoldImage.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +58,7 @@
 		67E872951C3CEEB2006E1D0D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		67E872981C3CEEB2006E1D0D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		67E8729A1C3CEEB2006E1D0D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9F624C1E1C893263001B3F01 /* placeHoldImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeHoldImage.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 			children = (
 				672B27D51C463F9C002BDC69 /* beautiful.jpg */,
 				672B27D71C464841002BDC69 /* unicorn.png */,
+				9F624C1E1C893263001B3F01 /* placeHoldImage.png */,
 			);
 			name = images;
 			sourceTree = "<group>";
@@ -226,6 +229,7 @@
 			files = (
 				67E872991C3CEEB2006E1D0D /* LaunchScreen.storyboard in Resources */,
 				672B27D61C463F9C002BDC69 /* beautiful.jpg in Resources */,
+				9F624C1F1C893263001B3F01 /* placeHoldImage.png in Resources */,
 				67E872961C3CEEB2006E1D0D /* Assets.xcassets in Resources */,
 				672B27D81C464841002BDC69 /* unicorn.png in Resources */,
 				67E872941C3CEEB2006E1D0D /* Main.storyboard in Resources */,
