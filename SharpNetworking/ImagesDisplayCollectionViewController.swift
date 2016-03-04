@@ -60,10 +60,10 @@ class ImagesDisplayCollectionViewController: UIViewController, UICollectionViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "CleanCache", style: .Plain, target: self, action: "cleanCache")
         let viewLayout = UICollectionViewFlowLayout()
         viewLayout.itemSize = CGSizeMake(width, height)
-        self.collectionView = UICollectionView.init(frame: CGRectMake(0, 64, width, UIScreen.mainScreen().bounds.size.height - 64), collectionViewLayout: viewLayout)
+        self.collectionView = UICollectionView.init(frame: self.view.bounds, collectionViewLayout: viewLayout)
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         self.collectionView.registerClass(CollectViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
@@ -92,7 +92,7 @@ class ImagesDisplayCollectionViewController: UIViewController, UICollectionViewD
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func cleanCache(sender: AnyObject) {
+    func cleanCache() {
         SharpNetManager.manager.memoryChache.cleanCache()
         SharpNetManager.manager.memoryChache.cleandiskCache()
     }
@@ -137,23 +137,49 @@ class ImagesDisplayCollectionViewController: UIViewController, UICollectionViewD
 class CollectViewCell: UICollectionViewCell {
     
     var cellImageView: UIImageView
+    var sharplayer: CAShapeLayer
     var imageUrlString: String! {
         didSet {
             
         }
         willSet {
-            cellImageView.gb_setImage(newValue, key: newValue, placehold: "placeHoldImage", progress: { (progress) -> Void in
-                
-                }) { (image, error) -> Void in
-                    print(error)
-            }
+            dealWithSomeThings(newValue)
+        }
+    }
+    
+    func dealWithSomeThings(newValue: String) {
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        self.sharplayer.hidden = true
+        self.sharplayer.strokeEnd = 0
+        CATransaction.commit()
+        
+        cellImageView.gb_setImage(newValue, key: newValue, placehold: "placeHoldImage", progress: {[unowned self] (progress) -> Void in
+            if self.sharplayer.hidden { self.sharplayer.hidden = false }
+            self.sharplayer.strokeEnd = CGFloat(progress.completedUnitCount / progress.totalUnitCount)
+            }) { (image, error) -> Void in
+                self.sharplayer.hidden = true
+                print(error)
         }
     }
     
     override init(frame: CGRect) {
         self.cellImageView = UIImageView(frame: CGRectMake(10, 5, width - 20, height - 10))
+        self.sharplayer = CAShapeLayer()
+        self.sharplayer.frame.size = CGSizeMake(cellImageView.frame.size.width, 4)
+        let bezierPath = UIBezierPath()
+        bezierPath.moveToPoint(CGPointMake(0, 2))
+        bezierPath.addLineToPoint(CGPointMake(cellImageView.frame.size.width, 2))
+        self.sharplayer.lineWidth = 4
+        self.sharplayer.path = bezierPath.CGPath
+        self.sharplayer.strokeColor = UIColor.init(red: 0.0, green: 0.64, blue: 1.0, alpha: 0.72).CGColor
+        self.sharplayer.strokeStart = 0
+        self.sharplayer.strokeEnd = 0
+        self.sharplayer.lineCap = kCALineCapButt
+        
         super.init(frame: frame)
         self.contentView.addSubview(self.cellImageView)
+        self.cellImageView.layer.addSublayer(self.sharplayer)
     }
     
     required init?(coder aDecoder: NSCoder) {
