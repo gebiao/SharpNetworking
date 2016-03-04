@@ -154,13 +154,20 @@ class CollectViewCell: UICollectionViewCell {
         self.sharplayer.strokeEnd = 0
         CATransaction.commit()
         
-        cellImageView.gb_setImage(newValue, key: newValue, placehold: "placeHoldImage", progress: {[unowned self] (progress) -> Void in
-            if self.sharplayer.hidden { self.sharplayer.hidden = false }
-            self.sharplayer.strokeEnd = (CGFloat(progress.completedUnitCount) / CGFloat(progress.totalUnitCount)) * self.cellImageView.frame.size.width
-            }) { (image, error) -> Void in
-                self.sharplayer.hidden = true
-                print(error)
-        }
+        cellImageView.gb_setImage(newValue, key: newValue, placehold: "placeHoldImage", progress: {[weak self] (progress) -> Void in
+            if let _self = self {
+                if _self.sharplayer.hidden { _self.sharplayer.hidden = false }
+                _self.sharplayer.strokeEnd = (CGFloat(progress.completedUnitCount) / CGFloat(progress.totalUnitCount)) * _self.cellImageView.frame.size.width
+            }
+            
+            }) { [weak self] (image, error) -> Void in
+                if let _self = self {
+                    _self.sharplayer.hidden = true
+                    if let error = error {
+                        print(error)
+                    }
+                }
+            }
     }
     
     override init(frame: CGRect) {

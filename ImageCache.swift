@@ -84,7 +84,7 @@ extension ImageCache {
             callbackCompletedInMainQueue()
         }
         
-        guard let image = UIImage.init(data: originData) else { fatalError("image or originData empty is not permitted.") }
+        guard let image = UIImage.init(data: originData) else { return }
         memoryCache.setObject(image, forKey: key.md5(), cost: image.imageCost)
         storeObjToDisk(originData)
     }
