@@ -142,8 +142,11 @@ class CollectViewCell: UICollectionViewCell {
             
         }
         willSet {
-            //beautiful.jpg
-            cellImageView.gb_setImage(newValue, key: newValue, placehold: "placeHoldImage", completedHandle: nil)
+            cellImageView.gb_setImage(newValue, key: newValue, placehold: "placeHoldImage", progress: { (progress) -> Void in
+                
+                }) { (image, error) -> Void in
+                    print(error)
+            }
         }
     }
     
