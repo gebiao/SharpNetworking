@@ -157,7 +157,9 @@ class CollectViewCell: UICollectionViewCell {
         cellImageView.gb_setImage(newValue, key: newValue, placehold: "placeHoldImage", progress: {[weak self] (progress) -> Void in
             if let _self = self {
                 if _self.sharplayer.hidden { _self.sharplayer.hidden = false }
-                _self.sharplayer.strokeEnd = (CGFloat(progress.completedUnitCount) / CGFloat(progress.totalUnitCount)) * _self.cellImageView.frame.size.width
+                let completedCount = CGFloat(progress.completedUnitCount)
+                let totalCount = CGFloat(progress.totalUnitCount)
+                _self.sharplayer.strokeEnd = (completedCount / totalCount) * _self.cellImageView.frame.size.width
             }
             
             }) { [weak self] (image, error) -> Void in
