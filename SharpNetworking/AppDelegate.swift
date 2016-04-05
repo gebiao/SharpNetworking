@@ -13,15 +13,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
-    /**
-     <#Description#>
-     
-     - parameter application:   <#application description#>
-     - parameter launchOptions: <#launchOptions description#>
-     
-     - returns: <#return value description#>
-     */
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         return true
